@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "poupamais"
+rootProject.name = "Gestao de Produtos"
 include ':app'
