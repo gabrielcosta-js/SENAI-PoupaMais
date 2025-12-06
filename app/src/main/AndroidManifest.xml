@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,12 +14,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GestaoDeProdutos">
         <activity
-            android:name=".view.DetalhesProdutoActivity"
-            android:exported="false" >
-        </activity>
+            android:name=".view.TelaAlterarReceita"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaAdicionarReceita"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaCarteira"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaAlterarDespesa"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaAdicionarDespesas"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaInicial"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaEsqueceuSenha"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaCadastroUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaLoginMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.RegistroUsuarioActivity"
+            android:exported="false" />
         <activity
             android:name=".view.MainActivity"
-            android:exported="true" >
+            android:exported="false" />
+        <activity
+            android:name=".view.DetalhesProdutoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

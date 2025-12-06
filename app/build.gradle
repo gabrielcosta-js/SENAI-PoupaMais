@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.poupamais'
+    namespace 'com.example.gestaodeprodutos'
     compileSdk {
         version = release(36)
     }
