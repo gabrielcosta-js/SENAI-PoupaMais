@@ -5,6 +5,145 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.TelaCadastroUsuario">
+    tools:context=".view.TelaCadastroUsuario"
+    android:background="@drawable/background_linear"
+    >
 
+    <View
+        android:id="@+id/container_Cadastro"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/container_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+         />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="309dp"
+        android:layout_height="205dp"
+        android:layout_marginBottom="540dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.607"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/logo_poupamais" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cadastro"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="@id/container_Cadastro"
+        app:layout_constraintStart_toStartOf="@id/container_Cadastro"
+        app:layout_constraintEnd_toEndOf="@id/container_Cadastro"
+
+        />
+    <TextView
+        android:id="@+id/txtDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crie a sua conta"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintStart_toStartOf="@id/container_Cadastro"
+        app:layout_constraintEnd_toEndOf="@id/container_Cadastro"
+
+        />
+    <EditText
+        android:id="@+id/edtCadastroNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintTop_toBottomOf="@id/txtDesc"
+        app:layout_constraintStart_toStartOf="@id/container_Cadastro"
+        app:layout_constraintEnd_toEndOf="@id/container_Cadastro"
+
+        />
+
+    <EditText
+        android:id="@+id/edtCadastroEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintTop_toBottomOf="@id/edtCadastroNome"
+        app:layout_constraintStart_toStartOf="@id/container_Cadastro"
+        app:layout_constraintEnd_toEndOf="@id/container_Cadastro"
+
+        />
+
+    <EditText
+        android:id="@+id/edtCadastroSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:background="@color/white"
+        android:padding="15dp"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_marginVertical="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintTop_toBottomOf="@id/edtCadastroEmail"
+        app:layout_constraintStart_toStartOf="@id/container_Cadastro"
+        app:layout_constraintEnd_toEndOf="@id/container_Cadastro"
+
+        />
+
+    <Button
+        android:id="@+id/btnCadastroCriarConta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="48dp"
+        android:backgroundTint="@color/black"
+        android:padding="15dp"
+        android:text="Criar Conta"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/container_Cadastro"
+        app:layout_constraintEnd_toEndOf="@id/container_Cadastro"
+        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintStart_toStartOf="@id/container_Cadastro"
+        app:layout_constraintTop_toBottomOf="@id/edtCadastroSenha"
+        app:layout_constraintVertical_bias="0.301" />
+
+    <TextView
+        android:id="@+id/txtCadastroIniciarLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="Já tem uma conta? Entrar"
+        android:textColor="#1D1C1C"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCadastroCriarConta"
+        app:layout_constraintVertical_bias="0.468" />
 </androidx.constraintlayout.widget.ConstraintLayout>

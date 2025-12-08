@@ -22,7 +22,7 @@ public class TelaEsqueceuSenha extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_tela_trocar_senha);
+        setContentView(R.layout.activity_esqueceu_senha);
 
         // Configuração de insets (somente isso!)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
