@@ -1,10 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.TelaAdicionarReceita">
+    android:background="#FFFFFF"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/btn_voltar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Adicionar Receita"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_voltar" />
+
+        <TextView
+            android:id="@+id/lbl_valor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Valor"
+            android:textColor="#9E9E9E"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_titulo" />
+
+        <EditText
+            android:id="@+id/edt_valor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@null"
+            android:hint="R$ 0,00"
+            android:inputType="numberDecimal"
+            android:textColor="#00C853"
+            android:textColorHint="#00C853"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_valor" />
+
+        <TextView
+            android:id="@+id/lbl_categoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Categoria"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_valor" />
+
+        <GridLayout
+            android:id="@+id/grid_categorias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:columnCount="3"
+            android:useDefaultMargins="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_categoria">
+
+            <LinearLayout android:id="@+id/cat_salario" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_work"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Salário"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/cat_freelance" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_attach_money"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Freelance"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/cat_investimento" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_trending_up"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Investimento"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/cat_presente" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_card_giftcard"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Presente"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/cat_economia" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_savings"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Economia"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/cat_outros" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_more_horiz"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Outros"/>
+            </LinearLayout>
+
+        </GridLayout>
+
+        <EditText
+            android:id="@+id/edt_data"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_input_field"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:paddingHorizontal="16dp"
+            android:hint="dd/mm/aaaa"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+            app:layout_constraintTop_toBottomOf="@+id/grid_categorias" />
+
+        <EditText
+            android:id="@+id/edt_descricao"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_field"
+            android:paddingHorizontal="16dp"
+            android:hint="Nome da receita"
+            android:inputType="textCapSentences"
+            app:layout_constraintTop_toBottomOf="@+id/edt_data" />
+
+        <EditText
+            android:id="@+id/edt_detalhes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_field"
+            android:padding="16dp"
+            android:gravity="top"
+            android:hint="Descrição (opcional)"
+            android:inputType="textMultiLine"
+            app:layout_constraintTop_toBottomOf="@+id/edt_descricao" />
+
+        <Button
+            android:id="@+id/btn_salvar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#00C853"
+            android:text="Adicionar Receita"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_detalhes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

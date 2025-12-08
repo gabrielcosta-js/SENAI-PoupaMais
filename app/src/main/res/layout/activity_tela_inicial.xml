@@ -7,4 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".view.TelaInicial">
 
+    <Button
+        android:id="@+id/btn_teste_carteira"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TESTAR CARTEIRA"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

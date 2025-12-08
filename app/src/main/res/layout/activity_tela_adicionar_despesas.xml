@@ -1,10 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.TelaAdicionarDespesas">
+    android:background="#FFFFFF"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/btn_voltar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Adicionar Despesa"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_voltar" />
+
+        <TextView
+            android:id="@+id/lbl_valor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Valor"
+            android:textColor="#9E9E9E"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_titulo" />
+
+        <EditText
+            android:id="@+id/edt_valor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@null"
+            android:hint="R$ 0,00"
+            android:inputType="numberDecimal"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_valor" />
+
+        <TextView
+            android:id="@+id/lbl_categoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Categoria"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_valor" />
+
+        <GridLayout
+            android:id="@+id/grid_categorias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:columnCount="3"
+            android:useDefaultMargins="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_categoria">
+
+            <LinearLayout android:id="@+id/cat_mercado" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_shopping_cart"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Mercado"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/cat_alimentacao" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_restaurant"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Alimentação"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/cat_transporte" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_directions_car"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Transporte"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/cat_moradia" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_home"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Moradia"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/cat_saude" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_favorite"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Saúde"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/cat_lazer" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_smartphone"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Lazer"/>
+            </LinearLayout>
+            <LinearLayout android:id="@+id/cat_outros" style="@style/CategoryButtonStyle">
+                <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_more_horiz"/>
+                <TextView style="@style/CategoryTextStyle" android:text="Outros"/>
+            </LinearLayout>
+        </GridLayout>
+
+        <EditText
+            android:id="@+id/edt_data"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_input_field"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:paddingHorizontal="16dp"
+            android:hint="dd/mm/aaaa"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+            app:layout_constraintTop_toBottomOf="@+id/grid_categorias" />
+
+        <EditText
+            android:id="@+id/edt_descricao"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_field"
+            android:paddingHorizontal="16dp"
+            android:hint="Nome da despesa"
+            android:inputType="textCapSentences"
+            app:layout_constraintTop_toBottomOf="@+id/edt_data" />
+
+        <EditText
+            android:id="@+id/edt_detalhes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_field"
+            android:padding="16dp"
+            android:gravity="top"
+            android:hint="Descrição (opcional)"
+            android:inputType="textMultiLine"
+            app:layout_constraintTop_toBottomOf="@+id/edt_descricao" />
+
+        <EditText
+            android:id="@+id/edt_pagamento"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_field"
+            android:paddingHorizontal="16dp"
+            android:hint="Forma de pagamento"
+            app:layout_constraintTop_toBottomOf="@+id/edt_detalhes" />
+
+        <LinearLayout
+            android:id="@+id/btn_anexar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_field"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toBottomOf="@+id/edt_pagamento">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_attach"
+                app:tint="#555555"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anexar comprovante"
+                android:textColor="#555555"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_salvar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#000000"
+            android:text="Adicionar Despesa"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_anexar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
