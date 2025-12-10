@@ -8,5 +8,9 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="nav_icon_inactive">#9E9E9E</color> <color name="nav_text_color">#000000</color>
+    <color name="nav_icon_inactive">#9E9E9E</color>
+    <color name="nav_text_color">#000000</color>
+    <color name="verde_principal">#4B8368</color>
+    <color name="fundo_creme">#fffae7</color>
+    <color name="bege_escuro">#d0cfb1</color>
 </resources>

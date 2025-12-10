@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +38,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_produto, parent, false);
+                .inflate(R.layout.item_despesa, parent, false);
         return new ViewHolder(item);
     }
 
@@ -65,10 +64,10 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtNome = itemView.findViewById(R.id.txtNome);
+            txtNome = itemView.findViewById(R.id.txt_titulo);
             txtPreco = itemView.findViewById(R.id.txtPreco);
-            btnEditar = itemView.findViewById(R.id.btnEditar);
-            btnExcluir = itemView.findViewById(R.id.btnExcluir);
+            btnEditar = itemView.findViewById(R.id.btn_anexar);
+            btnExcluir = itemView.findViewById(R.id.btn_salvar);
         }
     }
 }

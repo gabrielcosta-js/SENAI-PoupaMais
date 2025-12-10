@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Gestao de Produtos</string>
+    <string name="ola_usuario">ola_usuario</string>
+    <string name="total_despesas">total_despesa</string>
+    <string name="olaUsuario">Olá, Usuário</string>
+    <string name="total_despesa">Total Despesas</string>
+    <string name="receita">Receita</string>
+    <string name="volta_m_s">Volta mês</string>
+    <string name="navegar_home">navegar home\n</string>
+    <string name="navegar_carteira">navegar carteira</string>
+    <string name="carteira">carteira</string>
+    <string name="desc_voltar_mes">avanca mes\n</string>
 </resources>

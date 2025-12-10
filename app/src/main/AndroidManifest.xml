@@ -9,7 +9,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GestaoDeProdutos">
@@ -30,7 +30,13 @@
             android:exported="false" />
         <activity
             android:name=".view.TelaInicial"
-            android:exported="false" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.TelaEsqueceuSenha"
             android:exported="false" />
@@ -39,12 +45,9 @@
             android:exported="false" />
         <activity
             android:name=".view.TelaLoginMainActivity"
-            android:exported="true" >
+            android:exported="false" >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
+
 
         </activity>
 
@@ -61,6 +64,10 @@
             android:name=".view.LoginActivity"
             android:exported="false">
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

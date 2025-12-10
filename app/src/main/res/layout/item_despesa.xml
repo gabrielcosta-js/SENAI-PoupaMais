@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="8dp"
+    android:layout_marginHorizontal="24dp">
+
+    <ImageView
+        android:id="@+id/img_icone_despesa"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_more_horiz"
+        android:contentDescription="Ícone da categoria"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@color/black" /> <TextView
+    android:id="@+id/txt_nome_despesa"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="Nome da Despesa"
+    android:textColor="@color/black"
+    android:textSize="16sp"
+    android:textStyle="bold"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/img_icone_despesa"
+    app:layout_constraintEnd_toStartOf="@+id/txt_valor_despesa"
+    app:layout_constraintVertical_chainStyle="packed"/> <TextView
+    android:id="@+id/txt_categoria_despesa"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="Categoria"
+    android:textSize="12sp"
+    android:textColor="@color/nav_icon_inactive"
+    app:layout_constraintTop_toBottomOf="@+id/txt_nome_despesa"
+    app:layout_constraintStart_toEndOf="@+id/img_icone_despesa"
+    app:layout_constraintEnd_toStartOf="@+id/txt_valor_despesa"
+    app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_valor_despesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-R$ 0.00"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
