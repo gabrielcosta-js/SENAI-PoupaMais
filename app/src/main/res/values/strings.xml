@@ -10,4 +10,17 @@
     <string name="navegar_carteira">navegar carteira</string>
     <string name="carteira">carteira</string>
     <string name="desc_voltar_mes">avanca mes\n</string>
+    <string name="r_0_00">R$0.00</string>
+    <string name="avanca_mes">avanca mes</string>
+    <string name="home">Home</string>
+    <string name="todos">Todos</string>
+    <string name="despesas_recentes">Despesas Recentes</string>
+    <string name="gastos_por_categoria">Gastos por categoria</string>
+    <string name="mercado">Mercado</string>
+    <string name="transporte">Transporte</string>
+    <string name="alimentacao">Alimentação</string>
+    <string name="m_s_anterior">Mês anterior</string>
+    <string name="novembro">Novembro</string>
+    <string name="pr_ximo_m_s">Próximo mês</string>
+    <string name="adicionar_nova_despesa">Adicionar nova despesa</string>
 </resources>

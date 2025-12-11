@@ -53,7 +53,7 @@ public class TelaInicial extends AppCompatActivity {
 
         btnWallet.setOnClickListener(v -> {
             Toast.makeText(this, "Abrir Carteira", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, TelaAdicionarReceita.class);
+            Intent intent = new Intent(this, TelaCarteira.class);
             startActivity(intent);
         });
 
@@ -88,7 +88,6 @@ public class TelaInicial extends AppCompatActivity {
             txtDespesasValor.setText("R$ " + String.format(Locale.getDefault(), "%.2f", despesas));
         }
 
-        // TODO: Você precisará de lógica para atualizar as porcentagens (+12% este mês)
     }
 
     /**
@@ -116,19 +115,9 @@ public class TelaInicial extends AppCompatActivity {
         }
     }
 
-    /**
-     * Simula o carregamento de dados (substituir por acesso ao banco de dados real)
-     */
+
     private List<DespesaModel> carregarDespesasSimuladas() {
         List<DespesaModel> lista = new ArrayList<>();
-
-        // Dados de Exemplo (Baseado no seu design)
-        lista.add(new DespesaModel(1, "Mercado Extra", -234.50, "05/11", "Mercado"));
-        lista.add(new DespesaModel(2, "Starbucks", -18.90, "06/11", "Alimentação"));
-        lista.add(new DespesaModel(3, "Uber", -25.00, "06/11", "Transporte"));
-        lista.add(new DespesaModel(4, "Netflix", -39.90, "07/11", "Streaming"));
-        lista.add(new DespesaModel(5, "Farmácia", -67.30, "08/11", "Saúde"));
-        lista.add(new DespesaModel(6, "Salário", 3500.00, "01/11", "Receita")); // Exemplo de Receita
 
         return lista;
     }

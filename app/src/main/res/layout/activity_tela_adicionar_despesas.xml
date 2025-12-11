@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Adicionar Despesa"
-            android:textColor="#000000"
+            android:textColor="@color/verde_principal"
             android:textSize="22sp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
@@ -192,16 +192,16 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="32dp"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/verde_principal"
             android:text="Adicionar Despesa"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:cornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_anexar"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_anexar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

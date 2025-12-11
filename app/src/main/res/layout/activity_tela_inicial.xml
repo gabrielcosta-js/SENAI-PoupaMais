@@ -6,42 +6,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".view.MainActivity_professor">
-
+    tools:context=".view.TelaInicial">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp">
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="611dp"
+                android:background="@color/verde_principal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_saudacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/olaUsuario"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/card_despesas_resumo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/toolbar"
+                app:layout_constraintVertical_bias="0.235" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_despesas_resumo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toStartOf="@id/card_receitas_resumo"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="125dp"
-                tools:ignore="MissingConstraints">
+                app:layout_constraintTop_toTopOf="@+id/toolbar">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="12dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -53,17 +78,9 @@
                         android:id="@+id/txt_total_despesas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="R$0.00"
-                        android:textColor="#000000"
+                        android:text="@string/r_0_00"
                         android:textSize="20sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+0% este mês"
-                        android:textColor="#FF5252"
-                        android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -75,53 +92,69 @@
                 android:layout_marginEnd="24dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/card_despesas_resumo"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toEndOf="@id/card_despesas_resumo"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="@id/card_despesas_resumo">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/receita"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/txt_total_receitas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/r_0_00"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/layout_mes"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:gravity="center_vertical"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_despesas_resumo">
 
-
                 <ImageView
                     android:id="@+id/btn_voltar_mes"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/volta_m_s"
-                    android:focusable="true"
-                    android:padding="12dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:contentDescription="@string/m_s_anterior"
+                    android:padding="8dp"
                     android:src="@drawable/ic_arrow_back" />
 
                 <TextView
                     android:id="@+id/txt_mes_atual"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:text="Novembro"
-                    android:textColor="#000000"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@string/novembro"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/btn_avancar_mes"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:clickable="true"
-                    android:contentDescription="avanca mes"
-                    android:focusable="true"
-                    android:padding="12dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:backgroundTint="@color/verde_principal"
+                    android:contentDescription="@string/pr_ximo_m_s"
+                    android:padding="8dp"
                     android:src="@drawable/ic_arrow_forward" />
             </LinearLayout>
 
@@ -129,9 +162,10 @@
                 android:id="@+id/lbl_despesas_recentes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="28dp"
-                android:text="Despesas Recentes"
+                android:text="@string/despesas_recentes"
+                android:textColor="@color/verde_principal"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -139,25 +173,22 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_despesas_recentes"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.229"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_despesas_recentes"
-                tools:itemCount="4"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_despesa" />
+                app:layout_constraintTop_toBottomOf="@id/lbl_despesas_recentes" />
 
             <TextView
                 android:id="@+id/lbl_gastos_categoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="Gastos por categoria"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/gastos_por_categoria"
+                android:textColor="@color/verde_principal"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -165,151 +196,78 @@
 
             <HorizontalScrollView
                 android:id="@+id/scroll_categorias"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:paddingHorizontal="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
                 android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lbl_gastos_categoria">
 
                 <LinearLayout
-                    style="?android:attr/buttonBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp">
 
-                    <Button
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="110dp"
-                        android:layout_height="35dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/bg_button_selected"
-                        android:backgroundTint="#0F0E0E"
-                        android:paddingHorizontal="16dp"
-                        android:text="Todos"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                    <Button
-                        style="?android:attr/buttonBarButtonStyle"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_categoria_todos"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="35dp"
+                        android:layout_height="48dp"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/bg_button_default"
-                        android:paddingHorizontal="16dp"
-                        android:text="Mercado"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:text="@string/todos"
+                        android:textColor="@color/verde_principal"
+                        android:textSize="12sp"
+                        app:cornerRadius="20dp"
+                        app:rippleColor="@color/verde_principal"
+                        app:strokeColor="@color/verde_principal"
+                        app:strokeWidth="1dp" />
 
-                    <Button
-                        style="?android:attr/buttonBarButtonStyle"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_categoria_mercado"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="35dp"
+                        android:layout_height="48dp"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/bg_button_default"
-                        android:paddingHorizontal="16dp"
-                        android:text="Transporte"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:text="@string/mercado"
+                        android:textColor="@color/verde_principal"
+                        android:textSize="12sp"
+                        app:cornerRadius="20dp"
+                        app:strokeColor="@color/verde_principal"
+                        app:strokeWidth="1dp" />
 
-                    <Button
-                        style="?android:attr/buttonBarButtonStyle"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_categoria_transporte"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_button_default"
-                        android:paddingHorizontal="16dp"
-                        android:text="Alimentação"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/transporte"
+                        android:textColor="@color/verde_principal"
+                        android:textSize="12sp"
+                        app:cornerRadius="20dp"
+                        app:strokeColor="@color/verde_principal"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_categoria_alimentacao"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/alimentacao"
+                        android:textColor="@color/verde_principal"
+                        android:textSize="12sp"
+                        app:cornerRadius="20dp"
+                        app:strokeColor="@color/verde_principal"
+                        app:strokeWidth="1dp" />
 
                 </LinearLayout>
             </HorizontalScrollView>
-
-            <HorizontalScrollView
-                android:id="@+id/contener_tela_inicial"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="540dp"
-                android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/scroll_categorias"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" />
-            </HorizontalScrollView>
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="409dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="55dp"
-                android:background="@color/verde_principal"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:layout_constraintBottom_toTopOf="@+id/card_despesas_resumo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/txt_saudacao5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/olaUsuario"
-                android:textColor="#EBE5E5"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/toolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.067"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <LinearLayout
-                android:layout_width="173dp"
-                android:layout_height="95dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="439dp"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/card_despesas_resumo"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                app:layout_constraintVertical_bias="1.0">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/receita"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/txt_total_receitas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="R$ 0.00"
-                    android:textColor="#000000"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+5% este mês"
-                    android:textColor="#00E676"
-                    android:textSize="12sp" />
-            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -328,16 +286,17 @@
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="651dp"
         android:layout_marginBottom="24dp"
-        android:contentDescription="Adicionar nova despesa"
+        android:contentDescription="@string/adicionar_nova_despesa"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/verde_principal"
         app:elevation="10dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:maxImageSize="32dp"
         app:tint="@color/white" />
 
@@ -347,30 +306,27 @@
         android:layout_height="0dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
-        android:elevation="10dp"
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_background"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/fab_add"
+        app:layout_constraintEnd_toStartOf="@+id/fab_add"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bottom_nav_background">
 
         <ImageView
             android:id="@+id/img_home"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/navegar_home"
-            android:src="@drawable/ic_home"
-            app:tint="@color/nav_icon_inactive" />
+            android:contentDescription="@string/home"
+            android:src="@drawable/ic_home" />
 
         <TextView
             android:id="@+id/txt_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Home"
-            android:textColor="@color/nav_text_color"
+            android:text="@string/home"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -380,22 +336,20 @@
         android:layout_height="0dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
-        android:elevation="10dp"
         android:focusable="true"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_background"
-        app:layout_constraintLeft_toRightOf="@+id/fab_add"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fab_add"
         app:layout_constraintTop_toTopOf="@+id/bottom_nav_background">
 
         <ImageView
             android:id="@+id/img_wallet"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/navegar_carteira"
-            android:src="@drawable/ic_wallet"
-            app:tint="@color/nav_icon_inactive" />
+            android:contentDescription="@string/carteira"
+            android:src="@drawable/ic_wallet" />
 
         <TextView
             android:id="@+id/txt_wallet"
@@ -403,7 +357,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/carteira"
-            android:textColor="@color/nav_icon_inactive"
             android:textSize="12sp" />
     </LinearLayout>
 

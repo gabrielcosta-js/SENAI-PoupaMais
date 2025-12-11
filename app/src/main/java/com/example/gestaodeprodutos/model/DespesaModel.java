@@ -20,9 +20,6 @@ public class DespesaModel implements Serializable {
     @SerializedName("Categoria")
     public String categoria;
 
-    @SerializedName("Categoria")
-    public String categoria;
-
 
     public DespesaModel(Integer id, String descricao, double valor, String data, String categoria) {
         this.id = id;
@@ -37,7 +34,7 @@ public class DespesaModel implements Serializable {
         this.data = data;
         this.categoria = categoria;
     }
-    public DespesaModel(){}
+    public DespesaModel(String descricao, Double valor, String data, String categoria){}
 
     public Integer getId() {
         return id;
