@@ -46,9 +46,7 @@ public class TelaInicial extends AppCompatActivity {
         ImageView btnVoltarMes = findViewById(R.id.btn_voltar_mes);
 
         fabAdd.setOnClickListener(v -> {
-            Toast.makeText(this, "Abrir Adicionar Despesa", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, TelaAdicionarDespesas.class);
-            startActivity(intent);
+            showDialogEscolha();
         });
 
         btnWallet.setOnClickListener(v -> {
@@ -120,5 +118,34 @@ public class TelaInicial extends AppCompatActivity {
         List<DespesaModel> lista = new ArrayList<>();
 
         return lista;
+    }
+
+    private void showDialogEscolha() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_escolha, null);
+        dialog.setContentView(view);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        // Clique na opção RECEITA
+        LinearLayout btnReceita = view.findViewById(R.id.btn_escolha_receita);
+        btnReceita.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = new Intent(TelaCarteira.this, TelaAdicionarReceita.class);
+            startActivity(intent);
+        });
+
+        // Clique na opção DESPESA
+        LinearLayout btnDespesa = view.findViewById(R.id.btn_escolha_despesa);
+        btnDespesa.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = new Intent(TelaCarteira.this, TelaAdicionarDespesas.class);
+            startActivity(intent);
+        });
+
+        dialog.show();
     }
 }

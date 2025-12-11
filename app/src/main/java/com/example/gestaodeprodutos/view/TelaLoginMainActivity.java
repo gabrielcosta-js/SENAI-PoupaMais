@@ -44,6 +44,7 @@ public class TelaLoginMainActivity extends AppCompatActivity {
         txtLoginEsqueceuSenha.setOnClickListener(v -> {
             Intent intent = new Intent(this, TelaEsqueceuSenha.class);
             startActivity(intent);
+            finish();
         });
 
         // Clique: Entrar
@@ -65,6 +66,7 @@ public class TelaLoginMainActivity extends AppCompatActivity {
         txtLoginCriarConta.setOnClickListener(v -> {
             Intent intent = new Intent(this, TelaCadastroUsuario.class);
             startActivity(intent);
+            finish();
         });
     }
 }

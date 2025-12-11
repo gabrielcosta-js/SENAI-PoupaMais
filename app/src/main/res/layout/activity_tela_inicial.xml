@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".view.TelaInicial">
+    tools:context=".view.TelaInicial"
+    android:theme="@style/Theme.GestaoDeProdutos"
+
+    >
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -24,15 +28,13 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginBottom="611dp"
                 android:background="@color/verde_principal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
+
 
             <TextView
                 android:id="@+id/txt_saudacao"
