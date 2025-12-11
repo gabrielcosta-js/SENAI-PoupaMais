@@ -15,53 +15,61 @@
         android:theme="@style/Theme.GestaoDeProdutos">
         <activity
             android:name=".view.TelaAlterarReceita"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaAdicionarReceita"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaCarteira"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaAlterarDespesa"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaAdicionarDespesas"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaInicial"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" >
+
+        </activity>
+        <activity
+            android:name=".view.TelaEsqueceuSenha"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaCadastroUsuario"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" />
+        <activity
+            android:name=".view.TelaLoginMainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.TelaEsqueceuSenha"
-            android:exported="false" />
-        <activity
-            android:name=".view.TelaCadastroUsuario"
-            android:exported="false" />
-        <activity
-            android:name=".view.TelaLoginMainActivity"
-            android:exported="false" >
-
 
 
         </activity>
 
         <activity
-            android:name=".view.RegistroUsuarioActivity"
+            android:name=".view.RegistroUsuarioActivity_professor"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.MainActivity_professor"
             android:exported="false" />
         <activity
-            android:name=".view.DetalhesProdutoActivity"
+            android:name=".view.DetalhesProdutoActivity_professor"
             android:exported="false" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.LoginActivity_professor"
             android:exported="false">
         </activity>
 

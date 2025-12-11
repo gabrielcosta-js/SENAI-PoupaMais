@@ -10,26 +10,26 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
-import com.example.gestaodeprodutos.model.Produto;
+import com.example.gestaodeprodutos.model.Produto_professor;
 
 import java.util.List;
 
 public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHolder> {
 
-    private List<Produto> lista;
+    private List<Produto_professor> lista;
     private ProdutoListener listener;
 
     public interface ProdutoListener {
-        void onEditarClick(Produto p);
-        void onDeletarClick(Produto p);
+        void onEditarClick(Produto_professor p);
+        void onDeletarClick(Produto_professor p);
     }
 
-    public ProdutoAdapter(List<Produto> lista, ProdutoListener listener) {
+    public ProdutoAdapter(List<Produto_professor> lista, ProdutoListener listener) {
         this.lista = lista;
         this.listener = listener;
     }
 
-    public void atualizarLista(List<Produto> novaLista) {
+    public void atualizarLista(List<Produto_professor> novaLista) {
         this.lista = novaLista;
         notifyDataSetChanged();
     }
@@ -44,7 +44,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Produto p = lista.get(position);
+        Produto_professor p = lista.get(position);
         holder.txtNome.setText(p.getNome());
         holder.txtPreco.setText("R$ " + p.getPreco());
 

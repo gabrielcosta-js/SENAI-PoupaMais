@@ -1,6 +1,7 @@
 package com.example.gestaodeprodutos.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,8 @@ public class TelaInicial extends AppCompatActivity {
     private RecyclerView recyclerViewDespesas;
     private Calendar calendarioAtual;
 
+    private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; //  Anon key
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +47,14 @@ public class TelaInicial extends AppCompatActivity {
 
         fabAdd.setOnClickListener(v -> {
             Toast.makeText(this, "Abrir Adicionar Despesa", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, TelaAdicionarDespesas.class);
+            startActivity(intent);
         });
 
         btnWallet.setOnClickListener(v -> {
             Toast.makeText(this, "Abrir Carteira", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, TelaAdicionarReceita.class);
+            startActivity(intent);
         });
 
         btnAvancarMes.setOnClickListener(v -> {

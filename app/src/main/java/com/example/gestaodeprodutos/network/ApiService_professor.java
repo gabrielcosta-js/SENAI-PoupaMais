@@ -1,6 +1,6 @@
 package com.example.gestaodeprodutos.network;
 
-import com.example.gestaodeprodutos.model.Produto;
+import com.example.gestaodeprodutos.model.Produto_professor;
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,14 +13,14 @@ import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface ApiService {
+public interface ApiService_professor {
 
     @Headers({
             "Accept: application/json",
             "Prefer: return=representation"
     })
     @GET("rest/v1/produtos?select=*&order=nome.asc")
-    Call<List<Produto>> listarProdutos(
+    Call<List<Produto_professor>> listarProdutos(
             @Header("apikey") String apiKey,
             @Header("Authorization") String auth
     );
@@ -33,7 +33,7 @@ public interface ApiService {
     Call<Void> inserirProduto(
             @Header("apikey") String apiKey,
             @Header("Authorization") String auth,
-            @Body Produto produto
+            @Body Produto_professor produto
     );
 
     @Headers({
@@ -45,7 +45,7 @@ public interface ApiService {
             @Header("apikey") String apiKey,
             @Header("Authorization") String auth,
             @Query("id") String id,
-            @Body Produto produto
+            @Body Produto_professor produto
     );
 
     @Headers({

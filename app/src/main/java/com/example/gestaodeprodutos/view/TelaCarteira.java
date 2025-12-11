@@ -18,7 +18,7 @@ import com.example.gestaodeprodutos.adapter.DadosAdapter;
 import com.example.gestaodeprodutos.model.Dados;
 import com.example.gestaodeprodutos.model.DespesaModel;
 import com.example.gestaodeprodutos.model.ReceitaModel;
-import com.example.gestaodeprodutos.network.RetrofitClient;
+import com.example.gestaodeprodutos.network.RetrofitClient_professor;
 import com.example.gestaodeprodutos.network.SupabaseService;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,6 +46,8 @@ public class TelaCarteira extends AppCompatActivity {
     private List<Dados> listaUnificada = new ArrayList<>();
     private SupabaseService service;
 
+    private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; //  Anon key
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,7 @@ public class TelaCarteira extends AppCompatActivity {
         setupNavigation();
 
         // 1. Configurar Retrofit
-        service = RetrofitClient.getRetrofitInstance().create(SupabaseService.class);
+        service = RetrofitClient_professor.getRetrofitInstance().create(SupabaseService.class);
 
         // 2. Carregar Dados
         carregarDadosDoSupabase();
@@ -110,7 +112,7 @@ public class TelaCarteira extends AppCompatActivity {
         listaUnificada.clear();
 
         // A. Buscar Receitas
-        service.getReceitas("*").enqueue(new Callback<List<ReceitaModel>>() {
+        service.listarReceita(API_KEY, "Bearer " + API_KEY).enqueue(new Callback<List<ReceitaModel>>() {
             @Override
             public void onResponse(Call<List<ReceitaModel>> call, Response<List<ReceitaModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -134,7 +136,7 @@ public class TelaCarteira extends AppCompatActivity {
 
     private void buscarDespesas() {
         // B. Buscar Despesas
-        service.getDespesas("*").enqueue(new Callback<List<DespesaModel>>() {
+        service.listarDespesa(API_KEY, "Bearer " + API_KEY).enqueue(new Callback<List<DespesaModel>>() {
             @Override
             public void onResponse(Call<List<DespesaModel>> call, Response<List<DespesaModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {

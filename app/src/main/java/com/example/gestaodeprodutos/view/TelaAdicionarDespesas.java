@@ -1,6 +1,7 @@
 package com.example.gestaodeprodutos.view;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,7 +9,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.gestaodeprodutos.R;
+import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
+
 import java.util.Calendar;
 
 public class TelaAdicionarDespesas extends AppCompatActivity {
@@ -21,10 +26,15 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
     private String categoriaSelecionada = "";
     private LinearLayout[] categoriasViews;
 
+    private DadosViewModel dadosViewModel; // Classe Intermediadora
+
+    private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; //  Anon key
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_adicionar_despesas);
+
 
         initViews();
         setupCategoryClicks();
@@ -37,11 +47,26 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
         );
 
         btnSalvar.setOnClickListener(v -> {
+
+            btnVoltar = findViewById(R.id.btn_voltar);
+
+            edtValor = findViewById(R.id.edt_valor);
+            edtData = findViewById(R.id.edt_data);
+            edtDescricao = findViewById(R.id.edt_descricao);
+            edtDetalhes = findViewById(R.id.edt_detalhes);
+            edtPagamento = findViewById(R.id.edt_pagamento);
+
+            btnAnexar = findViewById(R.id.btn_anexar);
+            btnSalvar = findViewById(R.id.btn_salvar);
+
+            dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+
             // Coletar dados
             String valor = edtValor.getText().toString();
             String data = edtData.getText().toString();
             String nomeDespesa = edtDescricao.getText().toString(); // "Nome da despesa"
 
+            // Verificações
             if (valor.isEmpty()) {
                 Toast.makeText(this, "Digite o valor", Toast.LENGTH_SHORT).show();
                 return;
@@ -57,20 +82,32 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
 
             String mensagem = "Salvando: " + nomeDespesa + " (" + categoriaSelecionada + ") - R$ " + valor;
             Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
+
+            Double valorDespesa = Double.parseDouble(edtValor.getText().toString());
+            String dataDespesa = edtData.getText().toString();
+            String descricaoDespesa = edtDescricao.getText().toString();
+            String detalhesDespesa = edtDetalhes.getText().toString();
+            String pagamentoDespesa = edtPagamento.getText().toString();
+
+            dadosViewModel.inserirDespesa(valorDespesa,dataDespesa, descricaoDespesa, detalhesDespesa, pagamentoDespesa, API_KEY);
+
+            finish();
         });
     }
 
-    private void initViews() {
+    private void initViews() { //Puxar os botões do XML
         btnVoltar = findViewById(R.id.btn_voltar);
-        edtValor = findViewById(R.id.edt_valor);
 
+        edtValor = findViewById(R.id.edt_valor);
         edtData = findViewById(R.id.edt_data);
         edtDescricao = findViewById(R.id.edt_descricao);
         edtDetalhes = findViewById(R.id.edt_detalhes);
         edtPagamento = findViewById(R.id.edt_pagamento);
-        btnAnexar = findViewById(R.id.btn_anexar);
 
+        btnAnexar = findViewById(R.id.btn_anexar);
         btnSalvar = findViewById(R.id.btn_salvar);
+
+        dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
 
         categoriasViews = new LinearLayout[]{
                 findViewById(R.id.cat_mercado), findViewById(R.id.cat_alimentacao),
@@ -78,6 +115,12 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
                 findViewById(R.id.cat_saude), findViewById(R.id.cat_lazer),
                 findViewById(R.id.cat_outros)
         };
+
+        btnVoltar.setOnClickListener(v ->{
+            Intent intent = new Intent(this, TelaInicial.class);
+            startActivity(intent);
+        });
+
     }
 
     private void setupDatePicker() {

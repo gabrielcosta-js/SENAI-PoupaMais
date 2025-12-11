@@ -7,17 +7,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gestaodeprodutos.R;
-import com.example.gestaodeprodutos.viewmodel.AuthViewModel;
+import com.example.gestaodeprodutos.viewmodel.AuthViewModel_professor;
 
-public class RegistroUsuarioActivity extends AppCompatActivity {
+public class RegistroUsuarioActivity_professor extends AppCompatActivity {
     private EditText edtEmail, edtSenha;
-    private AuthViewModel viewModel;
+    private AuthViewModel_professor viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +26,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         edtSenha = findViewById(R.id.edtSenhaRegistro);
         Button btnRegistrar = findViewById(R.id.btnRegistrar);
 
-        viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AuthViewModel_professor.class);
 
         btnRegistrar.setOnClickListener(v -> {
             String email = edtEmail.getText().toString();

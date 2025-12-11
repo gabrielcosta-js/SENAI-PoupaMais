@@ -1,26 +1,24 @@
 package com.example.gestaodeprodutos.viewmodel;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.gestaodeprodutos.model.Produto;
-import com.example.gestaodeprodutos.repository.ProdutoRepository;
+import com.example.gestaodeprodutos.model.Produto_professor;
+import com.example.gestaodeprodutos.repository.ProdutoRepository_professor;
 
 import java.util.List;
 
-public class ProdutoViewModel extends ViewModel {
+public class ProdutoViewModel_professor extends ViewModel {
 
-    private final ProdutoRepository repository;
-    private final MutableLiveData<List<Produto>> produtos = new MutableLiveData<>();
+    private final ProdutoRepository_professor repository;
+    private final MutableLiveData<List<Produto_professor>> produtos = new MutableLiveData<>();
 
-    public ProdutoViewModel() {
-        repository = new ProdutoRepository();
+    public ProdutoViewModel_professor() {
+        repository = new ProdutoRepository_professor();
     }
 
-    public LiveData<List<Produto>> getProdutos() {
+    public LiveData<List<Produto_professor>> getProdutos() {
         return produtos;
     }
 
@@ -29,12 +27,12 @@ public class ProdutoViewModel extends ViewModel {
     }
 
     public LiveData<Boolean> inserirProduto(String nome, Double preco, String token) {
-        Produto p = new Produto(nome, preco);
+        Produto_professor p = new Produto_professor(nome, preco);
         return repository.inserirProduto(p, token);
     }
 
     public LiveData<Boolean> atualizarProduto(int id, String nome, Double preco, String token) {
-        Produto p = new Produto(id, nome, preco);
+        Produto_professor p = new Produto_professor(id, nome, preco);
         return repository.atualizarProduto(p, token);
     }
 

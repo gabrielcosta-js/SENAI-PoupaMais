@@ -4,9 +4,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.gestaodeprodutos.model.Produto;
-import com.example.gestaodeprodutos.network.ApiService;
-import com.example.gestaodeprodutos.network.RetrofitClient;
+import com.example.gestaodeprodutos.model.Produto_professor;
+import com.example.gestaodeprodutos.network.ApiService_professor;
+import com.example.gestaodeprodutos.network.RetrofitClient_professor;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -17,22 +17,22 @@ import retrofit2.Response;
 
 // O Repository é responsável por acessar a API.
 // Ele separa a ViewModel da lógica de rede.
-public class ProdutoRepository {
+public class ProdutoRepository_professor {
 
-    private ApiService apiService;
+    private ApiService_professor apiService;
 
     // API KEY e Bearer Key
     private final String API_KEY = "sb_publishable_eN4SSA3iUkrz-EgXNdJqpQ_Fdh8Dn20";
 
-    public ProdutoRepository() {
-        apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+    public ProdutoRepository_professor() {
+        apiService = RetrofitClient_professor.getRetrofitInstance().create(ApiService_professor.class);
     }
 
-    public void listarProdutos(MutableLiveData<List<Produto>> produtosLiveData, String token) {
+    public void listarProdutos(MutableLiveData<List<Produto_professor>> produtosLiveData, String token) {
 
-        apiService.listarProdutos(API_KEY, token).enqueue(new Callback<List<Produto>>() {
+        apiService.listarProdutos(API_KEY, token).enqueue(new Callback<List<Produto_professor>>() {
             @Override
-            public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
+            public void onResponse(Call<List<Produto_professor>> call, Response<List<Produto_professor>> response) {
 
                 Log.d("API_DEBUG", "Codigo: " + response.code());
                 Log.d("API_DEBUG", "Body: " + new Gson().toJson(response.body()));
@@ -45,13 +45,13 @@ public class ProdutoRepository {
             }
 
             @Override
-            public void onFailure(Call<List<Produto>> call, Throwable t) {
+            public void onFailure(Call<List<Produto_professor>> call, Throwable t) {
                 produtosLiveData.setValue(null);
             }
         });
     }
 
-    public MutableLiveData<Boolean> inserirProduto(Produto produto, String token) {
+    public MutableLiveData<Boolean> inserirProduto(Produto_professor produto, String token) {
         MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
 
         apiService.inserirProduto(API_KEY, token, produto).enqueue(new Callback<Void>() {
@@ -69,7 +69,7 @@ public class ProdutoRepository {
         return sucesso;
     }
 
-    public MutableLiveData<Boolean> atualizarProduto(Produto produto, String token) {
+    public MutableLiveData<Boolean> atualizarProduto(Produto_professor produto, String token) {
         MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
         String id = "eq." + produto.getId().toString();
 

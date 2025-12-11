@@ -1,6 +1,5 @@
 package com.example.gestaodeprodutos.network;
 
-
 import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -10,39 +9,43 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-// Classe responsável por criar uma instância única do Retrofit.
-// Aqui configuramos o endpoint do Supabase.
-// WHRitEEBUcPalFwY
-public class RetrofitClient {
+// Classe responsável por criar a conexão com a API do Supabase
 
+public class RetrofitSupabase {
     private static Retrofit retrofit;
 
-    // URL do Banco Supabase
+    // 🔵 ALTERAR AQUI:
+    // URL do seu projeto Supabase (NÃO inclui /rest/v1)
     private static final String BASE_URL = "https://hiojmrdypibzlaxirbal.supabase.co";
 
-    // Chave API Banco
-    private static final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhpb2ptcmR5cGliemxheGlyYmFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyNDI4MTcsImV4cCI6MjA3OTgxODgxN30.XciHZ3e8s2jyoF_ZbO-EyVEkvDBNUOMAPqV5tc29gT0";
+    // 🔵 ALTERAR AQUI:
+    // Coloque sua chave ANON — nunca use service_role!
+    private static final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; // Public
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
 
-            // Configuração do Log (Para ver os dados no console do Android Studio)
+            // ✔ (Padrão) Mostrar logs no console — não mexer
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-            // Configuração do Cliente HTTP (Injetando a Chave API em TODAS as chamadas)
+            // ✔ (Padrão) Criação do cliente HTTP
             OkHttpClient client = new OkHttpClient.Builder()
-                    .addInterceptor(logging) // Adiciona o log
+                    .addInterceptor(logging) // log de requisições
                     .addInterceptor(new Interceptor() {
+
+                        // ✔ (Padrão) Interceptor que adiciona headers em TODAS as requisições
                         @Override
                         public Response intercept(Chain chain) throws IOException {
+
+                            // Requisição original
                             Request original = chain.request();
 
-                            // insere os headers obrigatórios do Supabase
+                            // Criação da nova requisição com cabeçalhos do Supabase
                             Request.Builder requestBuilder = original.newBuilder()
-                                    .header("apikey", API_KEY)
-                                    .header("Authorization", "Bearer " + API_KEY)
-                                    .header("Content-Type", "application/json")
+                                    .header("apikey", API_KEY) // 🔵 Envia a API KEY automaticamente
+                                    .header("Authorization", "Bearer " + API_KEY) // 🔵 Token obrigatório
+                                    .header("Content-Type", "application/json") // formato JSON
                                     .method(original.method(), original.body());
 
                             Request request = requestBuilder.build();
@@ -51,13 +54,14 @@ public class RetrofitClient {
                     })
                     .build();
 
-            // criando a instância Retrofit
+            // ✔ (Padrão) Configuração final do Retrofit — não mexer
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(BASE_URL) // 🔵 Apenas aqui você mexe
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
         return retrofit;
     }
 }
