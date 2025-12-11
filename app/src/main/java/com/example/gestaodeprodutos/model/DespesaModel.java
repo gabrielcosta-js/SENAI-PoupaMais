@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class DespesaModel implements Serializable {
     @SerializedName("id_despesas")
-    public int id;
+    public Integer id;
 
     @SerializedName("Descricao")
     public String descricao;
@@ -20,9 +20,18 @@ public class DespesaModel implements Serializable {
     @SerializedName("Categoria")
     public String categoria;
 
+    @SerializedName("Categoria")
+    public String categoria;
 
-    public DespesaModel(int id, String descricao, double valor, String data, String categoria) {
+
+    public DespesaModel(Integer id, String descricao, double valor, String data, String categoria) {
         this.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.data = data;
+        this.categoria = categoria;
+    }
+    public DespesaModel(String descricao, String detalhe, double valor, String data, String categoria) {
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
@@ -30,7 +39,7 @@ public class DespesaModel implements Serializable {
     }
     public DespesaModel(){}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

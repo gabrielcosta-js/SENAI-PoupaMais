@@ -46,6 +46,8 @@ public class TelaCarteira extends AppCompatActivity {
     private List<Dados> listaUnificada = new ArrayList<>();
     private SupabaseService service;
 
+    private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; //  Anon key
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +112,7 @@ public class TelaCarteira extends AppCompatActivity {
         listaUnificada.clear();
 
         // A. Buscar Receitas
-        service.getReceitas("*").enqueue(new Callback<List<ReceitaModel>>() {
+        service.listarReceita(API_KEY, "Bearer " + API_KEY).enqueue(new Callback<List<ReceitaModel>>() {
             @Override
             public void onResponse(Call<List<ReceitaModel>> call, Response<List<ReceitaModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -134,7 +136,7 @@ public class TelaCarteira extends AppCompatActivity {
 
     private void buscarDespesas() {
         // B. Buscar Despesas
-        service.getDespesas("*").enqueue(new Callback<List<DespesaModel>>() {
+        service.listarDespesa(API_KEY, "Bearer " + API_KEY).enqueue(new Callback<List<DespesaModel>>() {
             @Override
             public void onResponse(Call<List<DespesaModel>> call, Response<List<DespesaModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {

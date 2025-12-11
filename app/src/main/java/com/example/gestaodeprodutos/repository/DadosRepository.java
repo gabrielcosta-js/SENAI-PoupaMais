@@ -3,9 +3,11 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.gestaodeprodutos.model.Produto;
-import com.example.gestaodeprodutos.network.ApiService;
-import com.example.gestaodeprodutos.network.RetrofitClient;
+import com.example.gestaodeprodutos.model.DespesaModel;
+import com.example.gestaodeprodutos.model.ReceitaModel;
+import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
+import com.example.gestaodeprodutos.network.SupabaseService;
+import com.example.gestaodeprodutos.network.RetrofitSupabase;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -20,80 +22,223 @@ import retrofit2.Response;
  * --> Aqui você configura as keys e chama os endpoints do ApiService.
  */
 public class DadosRepository {
-    // ============================
-    // ======= CONFIGURAR =========
-    // ============================
-    // 1) Coloque aqui sua API KEY (idealmente vir de BuildConfig ou outra forma segura).
-    //    NÃO deixe chaves sensíveis hardcoded em produção.
-    private final String API_KEY = "SUA_API_KEY_AQUI";                // <-- MUDAR
-    private final String AUTH = "Bearer SUA_API_KEY_AQUI";           // <-- MUDAR (se for usar "Bearer ")
+    // Instância da interface que contém as rotas da API
+    private SupabaseService apiService;
 
-    // ============================
-    // ======= PADRÃO / FIXO ======
-    // ============================
-    private ApiService apiService;
+    // 🔵 ALTERAR AQUI:
+    // Sua ANON KEY do projeto Supabase
+    private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW";
 
-    public ProdutoRepository() {
-        // Cria a implementação do ApiService via Retrofit (padrão)
-        apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+    public DadosRepository() {
+        // Cria a ApiService usando o Retrofit configurado no RetrofitClient
+        apiService = RetrofitSupabase.getRetrofitInstance().create(SupabaseService.class);
     }
 
-    /**
-     * Lista produtos (GET /produtos)
-     * Retorna um MutableLiveData com a lista (ou null em caso de erro).
-     */
-    public MutableLiveData<List<Produto>> listarProdutos() {
-        MutableLiveData<List<Produto>> produtosLiveData = new MutableLiveData<>();
+    // =======================================================
+    // 🔵 LISTAR PRODUTOS
+    // Chama o GET da API e devolve uma lista de Despesas
+    // =======================================================
+    public void listarDespesa(MutableLiveData<List<DespesaModel>> produtosLiveData, String token) {
 
-        // Chama o endpoint definido em ApiService
-        apiService.listarProdutos(API_KEY, AUTH).enqueue(new Callback<List<Produto>>() {
+        // Chama o endpoint definido no ApiService
+        apiService.listarDespesa(API_KEY, token).enqueue(new Callback<List<DespesaModel>>() {
+
             @Override
-            public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
-                // Log útil para debug (mostra código e corpo)
+            public void onResponse(Call<List<DespesaModel>> call, Response<List<DespesaModel>> response) {
+
+                // Log de depuração
                 Log.d("API_DEBUG", "Codigo: " + response.code());
                 Log.d("API_DEBUG", "Body: " + new Gson().toJson(response.body()));
-                Log.d("API_DEBUG", "Erro: " + response.errorBody());
 
+                // Se deu certo → manda os dados para o LiveData
                 if (response.isSuccessful()) {
-                    // Se der certo, coloca a lista no LiveData
                     produtosLiveData.setValue(response.body());
                 } else {
-                    // Se der erro, coloca null (você pode opcionalmente colocar lista vazia)
                     produtosLiveData.setValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Produto>> call, Throwable t) {
-                // Em caso de falha de rede/exceção, retornar null e logar o erro
-                Log.e("API_DEBUG", "Falha ao listar produtos", t);
+            public void onFailure(Call<List<DespesaModel>> call, Throwable t) {
                 produtosLiveData.setValue(null);
             }
         });
-
-        return produtosLiveData;
     }
 
-    /**
-     * Insere um produto (POST /produtos)
-     * Retorna MutableLiveData<Boolean> indicando sucesso (true) ou falha (false).
-     */
-    public MutableLiveData<Boolean> inserirProduto(Produto produto) {
-        MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
+    // =======================================================
+    // 🔵 LISTAR PRODUTOS
+    // Chama o GET da API e devolve uma lista de Receitas
+    // =======================================================
+    public void listarReceita(MutableLiveData<List<ReceitaModel>> produtosLiveData, String token) {
 
-        // Chama o endpoint de inserir definido em ApiService
-        apiService.inserirProduto(API_KEY, AUTH, produto).enqueue(new Callback<Produto>() {
+        // Chama o endpoint definido no ApiService
+        apiService.listarReceita(API_KEY, token).enqueue(new Callback<List<ReceitaModel>>() {
+
             @Override
-            public void onResponse(Call<Produto> call, Response<Produto> response) {
-                // response.isSuccessful() => código 2xx
-                sucesso.setValue(response.isSuccessful());
-                Log.d("API_DEBUG", "Inserir produto - codigo: " + response.code());
+            public void onResponse(Call<List<ReceitaModel>> call, Response<List<ReceitaModel>> response) {
+
+                // Log de depuração
+                Log.d("API_DEBUG", "Codigo: " + response.code());
+                Log.d("API_DEBUG", "Body: " + new Gson().toJson(response.body()));
+
+                // Se deu certo → manda os dados para o LiveData
+                if (response.isSuccessful()) {
+                    produtosLiveData.setValue(response.body());
+                } else {
+                    produtosLiveData.setValue(null);
+                }
             }
 
             @Override
-            public void onFailure(Call<Produto> call, Throwable t) {
-                // Em caso de falha de rede/exceção, marca como false
-                Log.e("API_DEBUG", "Falha ao inserir produto", t);
+            public void onFailure(Call<List<ReceitaModel>> call, Throwable t) {
+                produtosLiveData.setValue(null);
+            }
+        });
+    }
+
+    // =======================================================
+    // 🔵 INSERIR Despesa (POST)
+    // Envia a Despesa para o Supabase
+    // =======================================================
+    public MutableLiveData<Boolean> inserirDespesa(DespesaModel despesaModel, String token) {
+
+        MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
+
+        apiService.inserirDespesa(API_KEY, token, despesaModel).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                // Retorna true se o Supabase respondeu 200
+                sucesso.setValue(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                sucesso.setValue(false);
+            }
+        });
+
+        return sucesso;
+    }
+
+    // =======================================================
+    // 🔵 INSERIR Receita (POST)
+    // Envia Receita para o Supabase
+    // =======================================================
+    public MutableLiveData<Boolean> inserirReceita(ReceitaModel receitaModel, String token) {
+
+        MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
+
+        apiService.inserirReceita(API_KEY, token, receitaModel).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                // Retorna true se o Supabase respondeu 200
+                sucesso.setValue(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                sucesso.setValue(false);
+            }
+        });
+
+        return sucesso;
+    }
+
+    // =======================================================
+    // 🔵 ATUALIZAR Despesa (PATCH)
+    // Usa filtro "eq.<id>" para escolher o registro correto
+    // =======================================================
+    public MutableLiveData<Boolean> alterarDespesa(DespesaModel despesaModel, String token) {
+
+        MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
+
+        // Supabase exige filtro: id=eq.123
+        String id = "eq." + despesaModel.getId().toString();
+
+        apiService.alterarDespesa(API_KEY, token, id, despesaModel).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                sucesso.setValue(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                sucesso.setValue(false);
+            }
+        });
+
+        return sucesso;
+    }
+
+    // =======================================================
+    // 🔵 ATUALIZAR Receita (PATCH)
+    // Usa filtro "eq.<id>" para escolher o registro correto
+    // =======================================================
+    public MutableLiveData<Boolean> alterarReceita(ReceitaModel receitaModel, String token) {
+
+        MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
+
+        // Supabase exige filtro: id=eq.123
+        String id = "eq." + receitaModel.getId().toString();
+
+        apiService.alterarReceita(API_KEY, token, id, receitaModel).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                sucesso.setValue(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                sucesso.setValue(false);
+            }
+        });
+
+        return sucesso;
+    }
+
+    // =======================================================
+    // 🔵 DELETAR Despesa (DELETE)
+    // Também usa filtro: id=eq.<id>
+    // =======================================================
+    public MutableLiveData<Boolean> deletarDespesa(int id, String token) {
+
+        MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
+
+        apiService.deletarDespesa(API_KEY, token, "eq." + id).enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                sucesso.setValue(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                sucesso.setValue(false);
+            }
+        });
+
+        return sucesso;
+    }
+
+    // =======================================================
+    // 🔵 DELETAR Receita (DELETE)
+    // Também usa filtro: id=eq.<id>
+    // =======================================================
+    public MutableLiveData<Boolean> deletarReceita(int id, String token) {
+
+        MutableLiveData<Boolean> sucesso = new MutableLiveData<>();
+
+        apiService.deletarReceita(API_KEY, token, "eq." + id).enqueue(new Callback<Void>() {
+
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                sucesso.setValue(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 sucesso.setValue(false);
             }
         });

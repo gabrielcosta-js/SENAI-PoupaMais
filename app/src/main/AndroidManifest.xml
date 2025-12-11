@@ -15,18 +15,23 @@
         android:theme="@style/Theme.GestaoDeProdutos">
         <activity
             android:name=".view.TelaAlterarReceita"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaAdicionarReceita"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaCarteira"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaAlterarDespesa"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaAdicionarDespesas"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaInicial"
@@ -36,12 +41,15 @@
         </activity>
         <activity
             android:name=".view.TelaEsqueceuSenha"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaCadastroUsuario"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".view.TelaLoginMainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -11,16 +11,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 // Classe responsável por criar a conexão com a API do Supabase
 
-public class retrofitSupabase {
+public class RetrofitSupabase {
     private static Retrofit retrofit;
 
     // 🔵 ALTERAR AQUI:
     // URL do seu projeto Supabase (NÃO inclui /rest/v1)
-    private static final String BASE_URL = "https://SEU-PROJETO.supabase.co";
+    private static final String BASE_URL = "https://hiojmrdypibzlaxirbal.supabase.co";
 
     // 🔵 ALTERAR AQUI:
     // Coloque sua chave ANON — nunca use service_role!
-    private static final String API_KEY = "SUA_API_KEY_AQUI";
+    private static final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; // Public
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
