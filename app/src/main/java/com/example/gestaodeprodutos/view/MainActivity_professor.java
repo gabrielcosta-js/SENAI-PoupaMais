@@ -9,20 +9,19 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.gestaodeprodutos.R;
 import com.example.gestaodeprodutos.adapter.ProdutoAdapter;
-import com.example.gestaodeprodutos.model.Produto;
-import com.example.gestaodeprodutos.viewmodel.ProdutoViewModel;
+import com.example.gestaodeprodutos.model.Produto_professor;
+import com.example.gestaodeprodutos.viewmodel.ProdutoViewModel_professor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity_professor extends AppCompatActivity {
 
-    private ProdutoViewModel viewModel;
+    private ProdutoViewModel_professor viewModel;
     private ProdutoAdapter adapter;
 
     @Override
@@ -39,24 +38,24 @@ public class MainActivity extends AppCompatActivity {
         //cria o adapter para a lista e um listener para funções dos botões
         adapter = new ProdutoAdapter(new ArrayList<>(), new ProdutoAdapter.ProdutoListener() {
             @Override
-            public void onEditarClick(Produto produto) {
-                Intent intent = new Intent(MainActivity.this, DetalhesProdutoActivity.class);
+            public void onEditarClick(Produto_professor produto) {
+                Intent intent = new Intent(MainActivity_professor.this, DetalhesProdutoActivity_professor.class);
                 intent.putExtra("produto", produto);
                 startActivity(intent);
             }
 
             @Override
-            public void onDeletarClick(Produto produto) {
-                new AlertDialog.Builder(MainActivity.this)
+            public void onDeletarClick(Produto_professor produto) {
+                new AlertDialog.Builder(MainActivity_professor.this)
                         .setTitle("Atenção")
                         .setMessage("Tem certeza que deseja excluir?")
                         .setPositiveButton("Sim", (dialog, which) -> {
-                            viewModel.deletarProduto(produto.getId(), token).observe(MainActivity.this, sucesso -> {
+                            viewModel.deletarProduto(produto.getId(), token).observe(MainActivity_professor.this, sucesso -> {
                                 if (sucesso) {
-                                    Toast.makeText(MainActivity.this, "Produto excluído!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity_professor.this, "Produto excluído!", Toast.LENGTH_SHORT).show();
                                     viewModel.carregarProdutos(token);
                                 } else {
-                                    Toast.makeText(MainActivity.this, "Erro ao excluir!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity_professor.this, "Erro ao excluir!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         })
@@ -71,13 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fabAddProduto);
         fab.setOnClickListener(v -> {
-            Intent intent = new Intent(this, DetalhesProdutoActivity.class);
+            Intent intent = new Intent(this, DetalhesProdutoActivity_professor.class);
 
             startActivity(intent);
         });
 
         // VIEWMODEL
-        viewModel = new ViewModelProvider(this).get(ProdutoViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ProdutoViewModel_professor.class);
 
         viewModel.getProdutos().observe(this, produtos -> {
             Log.d("MAIN_DEBUG", "Lista recebida: " + produtos);

@@ -2,7 +2,9 @@ package com.example.gestaodeprodutos.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ReceitaModel {
+import java.io.Serializable;
+
+public class ReceitaModel implements Serializable {
     @SerializedName("id_receita")
     public int id;
 

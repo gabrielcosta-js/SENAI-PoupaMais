@@ -9,13 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.gestaodeprodutos.R;
-import com.example.gestaodeprodutos.model.Produto;
-import com.example.gestaodeprodutos.viewmodel.ProdutoViewModel;
+import com.example.gestaodeprodutos.model.Produto_professor;
+import com.example.gestaodeprodutos.viewmodel.ProdutoViewModel_professor;
 
-public class DetalhesProdutoActivity extends AppCompatActivity {
+public class DetalhesProdutoActivity_professor extends AppCompatActivity {
 
     private EditText edtNome, edtPreco;
-    private ProdutoViewModel viewModel;
+    private ProdutoViewModel_professor viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class DetalhesProdutoActivity extends AppCompatActivity {
         edtPreco = findViewById(R.id.txtPreco);
         Button btnSalvar = findViewById(R.id.btnSalvar);
 
-        viewModel = new ViewModelProvider(this).get(ProdutoViewModel.class);
-        Produto produto = (Produto) getIntent().getSerializableExtra("produto");
+        viewModel = new ViewModelProvider(this).get(ProdutoViewModel_professor.class);
+        Produto_professor produto = (Produto_professor) getIntent().getSerializableExtra("produto");
         Boolean isUpdate = produto != null;
 
         String token = this.getSharedPreferences("APP", MODE_PRIVATE)

@@ -2,7 +2,9 @@ package com.example.gestaodeprodutos.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DespesaModel {
+import java.io.Serializable;
+
+public class DespesaModel implements Serializable {
     @SerializedName("id_despesas")
     public int id;
 
@@ -26,6 +28,7 @@ public class DespesaModel {
         this.data = data;
         this.categoria = categoria;
     }
+    public DespesaModel(){}
 
     public int getId() {
         return id;

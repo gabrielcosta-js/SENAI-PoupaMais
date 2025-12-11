@@ -2,24 +2,24 @@ package com.example.gestaodeprodutos.model;
 
 import java.io.Serializable;
 
-public class Produto implements Serializable {
+public class Produto_professor implements Serializable {
     private Integer id;
     private String nome;
     private Double preco;
 
-    public Produto(String nome, Double preco) {
+    public Produto_professor(String nome, Double preco) {
         this.nome = nome;
         this.preco = preco;
     }
 
-    public Produto(int id, String nome, Double preco) {
+    public Produto_professor(int id, String nome, Double preco) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
     }
 
     // Construtor vazio obrigatório para Retrofit/Gson
-    public Produto() {}
+    public Produto_professor() {}
 
     public Integer getId() { return id; }
     public String getNome() { return nome; }

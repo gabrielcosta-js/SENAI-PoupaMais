@@ -18,7 +18,7 @@ import com.example.gestaodeprodutos.adapter.DadosAdapter;
 import com.example.gestaodeprodutos.model.Dados;
 import com.example.gestaodeprodutos.model.DespesaModel;
 import com.example.gestaodeprodutos.model.ReceitaModel;
-import com.example.gestaodeprodutos.network.RetrofitClient;
+import com.example.gestaodeprodutos.network.RetrofitClient_professor;
 import com.example.gestaodeprodutos.network.SupabaseService;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -57,7 +57,7 @@ public class TelaCarteira extends AppCompatActivity {
         setupNavigation();
 
         // 1. Configurar Retrofit
-        service = RetrofitClient.getRetrofitInstance().create(SupabaseService.class);
+        service = RetrofitClient_professor.getRetrofitInstance().create(SupabaseService.class);
 
         // 2. Carregar Dados
         carregarDadosDoSupabase();

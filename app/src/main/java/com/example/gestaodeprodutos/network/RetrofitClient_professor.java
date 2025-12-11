@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 // Classe responsável por criar uma instância única do Retrofit.
 // Aqui configuramos o endpoint do Supabase.
 // WHRitEEBUcPalFwY
-public class RetrofitClient {
+public class RetrofitClient_professor {
 
     private static Retrofit retrofit;
 
