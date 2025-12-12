@@ -45,23 +45,23 @@ public class DadosViewModel extends ViewModel {
 
 
     // Inserir Despesa e Receita
-    public LiveData<Boolean> inserirDespesa(Double valor, String data, String descricao, String detalhes, String categoria, String token) {
-        DespesaModel p = new DespesaModel(descricao, valor, data, categoria);
-        System.out.println(p.getValor()); // valorDespesa,dataDespesa, descricaoDespesa, detalhesDespesa, pagamentoDespesa,
+    public LiveData<Boolean> inserirDespesa(double valor, String categoria, String data, String nome_despesa, String descricao, String forma_pagamento, String token) {
+        DespesaModel p = new DespesaModel(valor, categoria, data, nome_despesa, descricao, forma_pagamento);
+        System.out.println(p.getValor());
         return repositoryDespesa.inserirDespesa(p, token);
     }
-    public LiveData<Boolean> inserirReceita(String descricao, Double valor, String data, String token) {
-        ReceitaModel p = new ReceitaModel(descricao, valor, data);
+    public LiveData<Boolean> inserirReceita(double valor, String categoria, String data, String nomeReceita,String descricao, String token) {
+        ReceitaModel p = new ReceitaModel(valor, categoria,data, nomeReceita, descricao);
         return repositoryReceita.inserirReceita(p, token);
     }
 
     // Atualizar/Alterar Despesa e Receita
-    public LiveData<Boolean> alterarDespesa(int id, Double valor, String data, String descricao, String categoria, String token) {
-        DespesaModel p = new DespesaModel(id, descricao, valor, data, categoria);
+    public LiveData<Boolean> alterarDespesa(int id, double valor, String categoria, String data, String nome_despesa, String descricao, String forma_pagamento, String token) {
+        DespesaModel p = new DespesaModel(id, valor, categoria, data, nome_despesa, descricao, forma_pagamento);
         return repositoryDespesa.alterarDespesa(p, token);
     }
-    public LiveData<Boolean> alterarReceita(int id, String descricao, Double valor, String data, String token) {
-        ReceitaModel p = new ReceitaModel(id, descricao, valor, data);
+    public LiveData<Boolean> alterarReceita(int id, double valor, String categoria, String data, String nomeReceita,String descricao, String token) {
+        ReceitaModel p = new ReceitaModel(id, valor, categoria,data, nomeReceita, descricao);
         return repositoryReceita.alterarReceita(p, token);
     }
 

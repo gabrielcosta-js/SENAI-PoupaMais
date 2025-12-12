@@ -19,11 +19,12 @@ import java.util.Calendar;
 public class TelaAdicionarDespesas extends AppCompatActivity {
 
     private ImageView btnVoltar;
-    private EditText edtValor, edtData, edtDescricao, edtDetalhes, edtPagamento;
+    private EditText edt_Valor, edt_Data, edt_NomeDespesa, edt_Descricao, edt_FormaPagamento;
+
+    private String categoriaSelecionada = "";
     private Button btnSalvar;
     private LinearLayout btnAnexar;
 
-    private String categoriaSelecionada = "";
     private LinearLayout[] categoriasViews;
 
     private DadosViewModel dadosViewModel; // Classe Intermediadora
@@ -35,10 +36,9 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_adicionar_despesas);
 
-
         initViews();
-        setupCategoryClicks();
-        setupDatePicker(); // Configura o calendário
+        setupCategoryClicks();   // <<< CONFIGURAR CATEGORIAS AQUI
+        setupDatePicker();
 
         btnVoltar.setOnClickListener(v -> finish());
 
@@ -48,25 +48,12 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
 
         btnSalvar.setOnClickListener(v -> {
 
-            btnVoltar = findViewById(R.id.btn_voltar);
+            String valor = edt_Valor.getText().toString();
+            String data = edt_Data.getText().toString();
+            String nomeDespesa = edt_NomeDespesa.getText().toString();
+            String descricaoDespesa = edt_Descricao.getText().toString();
+            String formaPagamento = edt_FormaPagamento.getText().toString();
 
-            edtValor = findViewById(R.id.edt_valor);
-            edtData = findViewById(R.id.edt_data);
-            edtDescricao = findViewById(R.id.edt_descricao);
-            edtDetalhes = findViewById(R.id.edt_detalhes);
-            edtPagamento = findViewById(R.id.edt_pagamento);
-
-            btnAnexar = findViewById(R.id.btn_anexar);
-            btnSalvar = findViewById(R.id.btn_salvar);
-
-            dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
-
-            // Coletar dados
-            String valor = edtValor.getText().toString();
-            String data = edtData.getText().toString();
-            String nomeDespesa = edtDescricao.getText().toString(); // "Nome da despesa"
-
-            // Verificações
             if (valor.isEmpty()) {
                 Toast.makeText(this, "Digite o valor", Toast.LENGTH_SHORT).show();
                 return;
@@ -80,52 +67,59 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
                 return;
             }
 
-            String mensagem = "Salvando: " + nomeDespesa + " (" + categoriaSelecionada + ") - R$ " + valor;
-            Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
+            Double valorDespesa = Double.parseDouble(valor);
 
-            Double valorDespesa = Double.parseDouble(edtValor.getText().toString());
-            String dataDespesa = edtData.getText().toString();
-            String descricaoDespesa = edtDescricao.getText().toString();
-            String detalhesDespesa = edtDetalhes.getText().toString();
-            String pagamentoDespesa = edtPagamento.getText().toString();
+            dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
 
-            dadosViewModel.inserirDespesa(valorDespesa,dataDespesa, descricaoDespesa, detalhesDespesa, pagamentoDespesa, API_KEY);
+            dadosViewModel.inserirDespesa(
+                    valorDespesa,
+                    categoriaSelecionada,
+                    data,
+                    nomeDespesa,
+                    descricaoDespesa,
+                    formaPagamento,
+                    API_KEY
+            );
+
+            Toast.makeText(this,
+                    "Salvando: " + nomeDespesa + " (" + categoriaSelecionada + ") - R$ " + valor,
+                    Toast.LENGTH_LONG).show();
 
             finish();
         });
     }
 
-    private void initViews() { //Puxar os botões do XML
+    private void initViews() {
         btnVoltar = findViewById(R.id.btn_voltar);
 
-        edtValor = findViewById(R.id.edt_valor);
-        edtData = findViewById(R.id.edt_data);
-        edtDescricao = findViewById(R.id.edt_descricao);
-        edtDetalhes = findViewById(R.id.edt_detalhes);
-        edtPagamento = findViewById(R.id.edt_pagamento);
+        edt_Valor = findViewById(R.id.edt_Valor);          // CORRETO
+        edt_Data = findViewById(R.id.edt_Data);            // CORRETO
+        edt_NomeDespesa = findViewById(R.id.edt_NomeDespesa);
+        edt_Descricao = findViewById(R.id.edt_Descricao);  // CORRETO
+        edt_FormaPagamento = findViewById(R.id.edt_FormaPagamento);
 
         btnAnexar = findViewById(R.id.btn_anexar);
         btnSalvar = findViewById(R.id.btn_salvar);
 
         dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
 
-        categoriasViews = new LinearLayout[]{
+        categoriasViews = new LinearLayout[] {
                 findViewById(R.id.cat_mercado), findViewById(R.id.cat_alimentacao),
                 findViewById(R.id.cat_transporte), findViewById(R.id.cat_moradia),
                 findViewById(R.id.cat_saude), findViewById(R.id.cat_lazer),
                 findViewById(R.id.cat_outros)
         };
 
-        btnVoltar.setOnClickListener(v ->{
+        btnVoltar.setOnClickListener(v -> {
             Intent intent = new Intent(this, TelaInicial.class);
             startActivity(intent);
         });
-
     }
+
 
     private void setupDatePicker() {
         // Ao clicar no campo de data, abre o calendário
-        edtData.setOnClickListener(v -> {
+        edt_Data.setOnClickListener(v -> {
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
@@ -136,7 +130,7 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
                         // Formata para dd/mm/aaaa
                         String dia = dayOfMonth < 10 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
                         String mes = (monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : String.valueOf(monthOfYear + 1);
-                        edtData.setText(dia + "/" + mes + "/" + year1);
+                        edt_Data.setText(dia + "/" + mes + "/" + year1);
                     }, year, month, day);
             datePickerDialog.show();
         });

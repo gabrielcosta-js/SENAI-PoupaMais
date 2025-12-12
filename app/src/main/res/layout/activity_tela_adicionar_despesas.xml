@@ -47,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_titulo" />
 
         <EditText
-            android:id="@+id/edt_valor"
+            android:id="@+id/edt_Valor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -71,7 +71,7 @@
             android:textColor="#757575"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_valor" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_Valor" />
 
         <GridLayout
             android:id="@+id/grid_categorias"
@@ -84,38 +84,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lbl_categoria">
 
-            <LinearLayout android:id="@+id/cat_mercado" style="@style/CategoryButtonStyle">
+            <LinearLayout android:id="@+id/cat_mercado" style="@style/CategoryButtonStyle" android:tag="Mercado">
                 <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_shopping_cart"/>
                 <TextView style="@style/CategoryTextStyle" android:text="Mercado"/>
             </LinearLayout>
-            <LinearLayout android:id="@+id/cat_alimentacao" style="@style/CategoryButtonStyle">
+            <LinearLayout android:id="@+id/cat_alimentacao" style="@style/CategoryButtonStyle" android:tag="Alimentação">
                 <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_restaurant"/>
                 <TextView style="@style/CategoryTextStyle" android:text="Alimentação"/>
             </LinearLayout>
-            <LinearLayout android:id="@+id/cat_transporte" style="@style/CategoryButtonStyle">
+            <LinearLayout android:id="@+id/cat_transporte" style="@style/CategoryButtonStyle" android:tag="Transporte">
                 <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_directions_car"/>
                 <TextView style="@style/CategoryTextStyle" android:text="Transporte"/>
             </LinearLayout>
-            <LinearLayout android:id="@+id/cat_moradia" style="@style/CategoryButtonStyle">
+            <LinearLayout android:id="@+id/cat_moradia" style="@style/CategoryButtonStyle" android:tag="Moradia">
                 <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_home"/>
                 <TextView style="@style/CategoryTextStyle" android:text="Moradia"/>
             </LinearLayout>
-            <LinearLayout android:id="@+id/cat_saude" style="@style/CategoryButtonStyle">
+            <LinearLayout android:id="@+id/cat_saude" style="@style/CategoryButtonStyle" android:tag="Saúde">
                 <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_favorite"/>
                 <TextView style="@style/CategoryTextStyle" android:text="Saúde"/>
             </LinearLayout>
-            <LinearLayout android:id="@+id/cat_lazer" style="@style/CategoryButtonStyle">
+            <LinearLayout android:id="@+id/cat_lazer" style="@style/CategoryButtonStyle" android:tag="Lazer">
                 <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_smartphone"/>
                 <TextView style="@style/CategoryTextStyle" android:text="Lazer"/>
             </LinearLayout>
-            <LinearLayout android:id="@+id/cat_outros" style="@style/CategoryButtonStyle">
+            <LinearLayout android:id="@+id/cat_outros" style="@style/CategoryButtonStyle" android:tag="Outros">
                 <ImageView style="@style/CategoryIconStyle" android:src="@drawable/ic_more_horiz"/>
                 <TextView style="@style/CategoryTextStyle" android:text="Outros"/>
             </LinearLayout>
         </GridLayout>
 
         <EditText
-            android:id="@+id/edt_data"
+            android:id="@+id/edt_Data"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="24dp"
@@ -129,7 +129,7 @@
             app:layout_constraintTop_toBottomOf="@+id/grid_categorias" />
 
         <EditText
-            android:id="@+id/edt_descricao"
+            android:id="@+id/edt_NomeDespesa"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="12dp"
@@ -137,10 +137,10 @@
             android:paddingHorizontal="16dp"
             android:hint="Nome da despesa"
             android:inputType="textCapSentences"
-            app:layout_constraintTop_toBottomOf="@+id/edt_data" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_Data" />
 
         <EditText
-            android:id="@+id/edt_detalhes"
+            android:id="@+id/edt_Descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="100dp"
@@ -150,17 +150,17 @@
             android:gravity="top"
             android:hint="Descrição (opcional)"
             android:inputType="textMultiLine"
-            app:layout_constraintTop_toBottomOf="@+id/edt_descricao" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_NomeDespesa" />
 
         <EditText
-            android:id="@+id/edt_pagamento"
+            android:id="@+id/edt_FormaPagamento"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_input_field"
             android:paddingHorizontal="16dp"
             android:hint="Forma de pagamento"
-            app:layout_constraintTop_toBottomOf="@+id/edt_detalhes" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_Descricao" />
 
         <LinearLayout
             android:id="@+id/btn_anexar"
@@ -171,7 +171,7 @@
             android:gravity="center"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintTop_toBottomOf="@+id/edt_pagamento">
+            app:layout_constraintTop_toBottomOf="@+id/edt_FormaPagamento">
 
             <ImageView
                 android:layout_width="24dp"

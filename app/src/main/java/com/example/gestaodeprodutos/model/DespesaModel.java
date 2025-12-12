@@ -5,51 +5,52 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class DespesaModel implements Serializable {
+    // OS nomes aqui precisa ser Igual ao que tá no Supabase e na mesma ordem
     @SerializedName("id_despesas")
     public Integer id;
 
-    @SerializedName("Descricao")
-    public String descricao;
+    @SerializedName("valor")
+    private double valor;
+    @SerializedName("categoria")
+    private String categoria;
 
-    @SerializedName("Valor")
-    public double valor;
+    @SerializedName("data")
+    private String data;
 
-    @SerializedName("Data")
-    public String data;
+    @SerializedName("nome_despesa")
+    private String nome_despesa;
 
-    @SerializedName("Categoria")
-    public String categoria;
+    @SerializedName("descricao")
+    private String descricao;
 
+    @SerializedName("forma_pagamento")
+    private String forma_pagamento;
 
-    public DespesaModel(Integer id, String descricao, double valor, String data, String categoria) {
+    public DespesaModel(Integer id, double valor, String categoria, String data, String nome_despesa, String descricao, String forma_pagamento) {
         this.id = id;
-        this.descricao = descricao;
         this.valor = valor;
-        this.data = data;
         this.categoria = categoria;
-    }
-    public DespesaModel(String descricao, String detalhe, double valor, String data, String categoria) {
+        this.data = data;
+        this.nome_despesa = nome_despesa;
         this.descricao = descricao;
-        this.valor = valor;
-        this.data = data;
-        this.categoria = categoria;
+        this.forma_pagamento = forma_pagamento;
     }
-    public DespesaModel(String descricao, Double valor, String data, String categoria){}
+    public DespesaModel(double valor, String categoria, String data, String nome_despesa, String descricao, String forma_pagamento) {
+        this.valor = valor;
+        this.categoria = categoria;
+        this.data = data;
+        this.nome_despesa = nome_despesa;
+        this.descricao = descricao;
+        this.forma_pagamento = forma_pagamento;
+    }
+    public DespesaModel(){}
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public double getValor() {
@@ -60,6 +61,14 @@ public class DespesaModel implements Serializable {
         this.valor = valor;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public String getData() {
         return data;
     }
@@ -67,12 +76,28 @@ public class DespesaModel implements Serializable {
     public void setData(String data) {
         this.data = data;
     }
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+
+    public String getNome_despesa() {
+        return nome_despesa;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public void setNome_despesa(String nome_despesa) {
+        this.nome_despesa = nome_despesa;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getForma_pagamento() {
+        return forma_pagamento;
+    }
+
+    public void setForma_pagamento(String forma_pagamento) {
+        this.forma_pagamento = forma_pagamento;
+    }
 }

@@ -3,6 +3,7 @@ package com.example.gestaodeprodutos.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.example.gestaodeprodutos.model.DespesaModel;
@@ -46,7 +48,7 @@ public class TelaInicial extends AppCompatActivity {
         ImageView btnVoltarMes = findViewById(R.id.btn_voltar_mes);
 
         fabAdd.setOnClickListener(v -> {
-            showDialogEscolha();
+             showDialogEscolha();
         });
 
         btnWallet.setOnClickListener(v -> {
@@ -119,7 +121,6 @@ public class TelaInicial extends AppCompatActivity {
 
         return lista;
     }
-
     private void showDialogEscolha() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
 
@@ -134,7 +135,7 @@ public class TelaInicial extends AppCompatActivity {
         LinearLayout btnReceita = view.findViewById(R.id.btn_escolha_receita);
         btnReceita.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent intent = new Intent(TelaCarteira.this, TelaAdicionarReceita.class);
+            Intent intent = new Intent(TelaInicial.this, TelaAdicionarReceita.class);
             startActivity(intent);
         });
 
@@ -142,7 +143,7 @@ public class TelaInicial extends AppCompatActivity {
         LinearLayout btnDespesa = view.findViewById(R.id.btn_escolha_despesa);
         btnDespesa.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent intent = new Intent(TelaCarteira.this, TelaAdicionarDespesas.class);
+            Intent intent = new Intent(TelaInicial.this, TelaAdicionarDespesas.class);
             startActivity(intent);
         });
 

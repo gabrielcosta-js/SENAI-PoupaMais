@@ -26,29 +26,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_width="412dp"
+                android:layout_height="66dp"
                 android:background="@color/verde_principal"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/txt_saudacao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="@string/olaUsuario"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/card_despesas_resumo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.125"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/toolbar"
-                app:layout_constraintVertical_bias="0.235" />
+                app:layout_constraintVertical_bias="0.367" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_despesas_resumo"
@@ -126,12 +130,14 @@
                 android:id="@+id/layout_mes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:gravity="center"
                 android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_despesas_resumo">
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="0.305">
 
                 <ImageView
                     android:id="@+id/btn_voltar_mes"
@@ -164,14 +170,17 @@
                 android:id="@+id/lbl_despesas_recentes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="28dp"
                 android:text="@string/despesas_recentes"
                 android:textColor="@color/verde_principal"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.089"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_mes" />
+                app:layout_constraintTop_toBottomOf="@id/layout_mes"
+                app:layout_constraintVertical_bias="0.0" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_despesas_recentes"
@@ -187,14 +196,17 @@
                 android:id="@+id/lbl_gastos_categoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="524dp"
                 android:text="@string/gastos_por_categoria"
                 android:textColor="@color/verde_principal"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.091"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_despesas_recentes" />
+                app:layout_constraintTop_toTopOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="0.0" />
 
             <HorizontalScrollView
                 android:id="@+id/scroll_categorias"
@@ -210,66 +222,71 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lbl_gastos_categoria">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_categoria_todos"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/todos"
-                        android:textColor="@color/verde_principal"
-                        android:textSize="12sp"
-                        app:cornerRadius="20dp"
-                        app:rippleColor="@color/verde_principal"
-                        app:strokeColor="@color/verde_principal"
-                        app:strokeWidth="1dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_categoria_mercado"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/mercado"
-                        android:textColor="@color/verde_principal"
-                        android:textSize="12sp"
-                        app:cornerRadius="20dp"
-                        app:strokeColor="@color/verde_principal"
-                        app:strokeWidth="1dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_categoria_transporte"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/transporte"
-                        android:textColor="@color/verde_principal"
-                        android:textSize="12sp"
-                        app:cornerRadius="20dp"
-                        app:strokeColor="@color/verde_principal"
-                        app:strokeWidth="1dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_categoria_alimentacao"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="@string/alimentacao"
-                        android:textColor="@color/verde_principal"
-                        android:textSize="12sp"
-                        app:cornerRadius="20dp"
-                        app:strokeColor="@color/verde_principal"
-                        app:strokeWidth="1dp" />
-
-                </LinearLayout>
             </HorizontalScrollView>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_gastos_categoria"
+                app:layout_constraintVertical_bias="0.41"
+                tools:layout_editor_absoluteX="0dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_categoria_todos"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/todos"
+                    android:textColor="@color/verde_principal"
+                    android:textSize="12sp"
+                    app:cornerRadius="20dp"
+                    app:rippleColor="@color/verde_principal"
+                    app:strokeColor="@color/verde_principal"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_categoria_mercado"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/mercado"
+                    android:textColor="@color/verde_principal"
+                    android:textSize="12sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/verde_principal"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_categoria_transporte"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/transporte"
+                    android:textColor="@color/verde_principal"
+                    android:textSize="12sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/verde_principal"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_categoria_alimentacao"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/alimentacao"
+                    android:textColor="@color/verde_principal"
+                    android:textSize="12sp"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="@color/verde_principal"
+                    app:strokeWidth="1dp" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -288,17 +305,15 @@
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="651dp"
         android:layout_marginBottom="24dp"
-        android:contentDescription="@string/adicionar_nova_despesa"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/verde_principal"
         app:elevation="10dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:maxImageSize="32dp"
         app:tint="@color/white" />
 
@@ -306,60 +321,63 @@
         android:id="@+id/btn_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:orientation="vertical"
+        android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:elevation="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_background"
-        app:layout_constraintEnd_toStartOf="@+id/fab_add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bottom_nav_background">
+        app:layout_constraintTop_toTopOf="@+id/bottom_nav_background"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/fab_add">
 
         <ImageView
             android:id="@+id/img_home"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/home"
-            android:src="@drawable/ic_home" />
-
+            android:src="@drawable/ic_home"
+            app:tint="@color/nav_text_color"
+             />
         <TextView
             android:id="@+id/txt_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/home"
-            android:textSize="12sp" />
+            android:text="Home"
+            android:textSize="12sp"
+            android:textColor="@color/nav_text_color"
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/btn_wallet"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:orientation="vertical"
+        android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:elevation="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fab_add"
-        app:layout_constraintTop_toTopOf="@+id/bottom_nav_background">
+        app:layout_constraintTop_toTopOf="@+id/bottom_nav_background"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/fab_add">
 
         <ImageView
             android:id="@+id/img_wallet"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="@string/carteira"
-            android:src="@drawable/ic_wallet" />
-
+            android:src="@drawable/ic_wallet"
+            app:tint="@color/nav_icon_inactive"/>
         <TextView
             android:id="@+id/txt_wallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/carteira"
-            android:textSize="12sp" />
+            android:text="Carteira"
+            android:textSize="12sp"
+            android:textColor="@color/nav_icon_inactive"
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
