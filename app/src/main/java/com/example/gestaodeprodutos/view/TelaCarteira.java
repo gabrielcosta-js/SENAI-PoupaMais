@@ -32,46 +32,35 @@ import retrofit2.Response;
 
 public class TelaCarteira extends AppCompatActivity {
 
-    // Componentes de Dados
     private RecyclerView recyclerView;
     private TextView txtSaldoTotal, txtTotalReceitas, txtTotalDespesas;
     private FloatingActionButton fabAdd;
 
-    // Componentes da Barra de Navegação
     private LinearLayout btnHome, btnWallet;
     private ImageView imgHome, imgWallet;
     private TextView txtHome, txtWallet;
 
-    // Variáveis Lógicas
     private List<Dados> listaUnificada = new ArrayList<>();
     private SupabaseService service;
 
-    private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; //  Anon key
+    private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // --- CORREÇÃO AQUI: Aponta para o seu layout correto ---
         setContentView(R.layout.activity_tela_carteira);
 
         initViews();
         setupNavigation();
 
-        // 1. Configurar Retrofit
         service = RetrofitClient_professor.getRetrofitInstance().create(SupabaseService.class);
 
-        // 2. Carregar Dados
         carregarDadosDoSupabase();
 
-        // 3. AÇÃO DO BOTÃO ADICIONAR (Abre o Menu Deslizante)
-        fabAdd.setOnClickListener(v -> {
-            showDialogEscolha();
-        });
+        fabAdd.setOnClickListener(v -> showDialogEscolha());
     }
 
     private void initViews() {
-        // Vincular IDs do XML
         recyclerView = findViewById(R.id.recycler_movimentos);
         txtSaldoTotal = findViewById(R.id.txt_saldo_total);
         txtTotalReceitas = findViewById(R.id.txt_total_receitas);
@@ -87,18 +76,14 @@ public class TelaCarteira extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        // Define estado inicial (Carteira Ativa)
         updateMenuColors(false);
 
-        // Botão Home -> Vai para TelaInicial
         btnHome.setOnClickListener(v -> {
             updateMenuColors(true);
-            Intent intent = new Intent(TelaCarteira.this, TelaInicial.class);
-            startActivity(intent);
+            startActivity(new Intent(TelaCarteira.this, TelaInicial.class));
             finish();
         });
 
-        // Botão Carteira -> Recarrega os dados
         btnWallet.setOnClickListener(v -> {
             updateMenuColors(false);
             carregarDadosDoSupabase();
@@ -106,55 +91,72 @@ public class TelaCarteira extends AppCompatActivity {
         });
     }
 
-    // --- MÉTODOS DE BANCO DE DADOS (SUPABASE) ---
+    // --------------------------- SUPABASE ------------------------------
 
     private void carregarDadosDoSupabase() {
         listaUnificada.clear();
 
-        // A. Buscar Receitas
-        service.listarReceita(API_KEY, "Bearer " + API_KEY).enqueue(new Callback<List<ReceitaModel>>() {
-            @Override
-            public void onResponse(Call<List<ReceitaModel>> call, Response<List<ReceitaModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    for (ReceitaModel r : response.body()) {
-                        String desc = (r.descricao != null) ? r.descricao : "Receita";
-                        String data = (r.data != null) ? r.data : "--/--";
-                        listaUnificada.add(new Dados(r.id, desc, r.valor, data, "RECEITA"));
-                    }
-                    buscarDespesas(); // Sucesso -> Busca Despesas
-                } else {
-                    buscarDespesas(); // Erro -> Tenta buscar Despesas mesmo assim
-                }
-            }
+        // Buscar receitas
+        service.listarReceita(API_KEY, "Bearer " + API_KEY)
+                .enqueue(new Callback<List<ReceitaModel>>() {
+                    @Override
+                    public void onResponse(Call<List<ReceitaModel>> call, Response<List<ReceitaModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            for (ReceitaModel r : response.body()) {
 
-            @Override
-            public void onFailure(Call<List<ReceitaModel>> call, Throwable t) {
-                buscarDespesas(); // Falha -> Tenta buscar Despesas mesmo assim
-            }
-        });
+                                String desc = (r.getNome_receita() != null && !r.getNome_receita().isEmpty())
+                                        ? r.getNome_receita()
+                                        : "Receita";
+
+                                String data = (r.getData() != null) ? r.getData() : "--/--";
+
+                                listaUnificada.add(
+                                        new Dados(r.getId(), desc, r.getValor(), data, "RECEITA")
+                                );
+                            }
+                        }
+                        buscarDespesas();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<ReceitaModel>> call, Throwable t) {
+                        buscarDespesas();
+                    }
+                });
     }
 
     private void buscarDespesas() {
-        // B. Buscar Despesas
-        service.listarDespesa(API_KEY, "Bearer " + API_KEY).enqueue(new Callback<List<DespesaModel>>() {
-            @Override
-            public void onResponse(Call<List<DespesaModel>> call, Response<List<DespesaModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    for (DespesaModel d : response.body()) {
-                        String desc = (d.descricao != null) ? d.descricao : "Despesa";
-                        String data = (d.data != null) ? d.data : "--/--";
-                        listaUnificada.add(new Dados(d.id, desc, d.valor, data, "DESPESA"));
-                    }
-                    atualizarInterface(); // Fim -> Atualiza a tela
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<DespesaModel>> call, Throwable t) {
-                atualizarInterface(); // Atualiza com o que tiver
-            }
-        });
+        service.listarDespesa(API_KEY, "Bearer " + API_KEY)
+                .enqueue(new Callback<List<DespesaModel>>() {
+                    @Override
+                    public void onResponse(Call<List<DespesaModel>> call, Response<List<DespesaModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            for (DespesaModel d : response.body()) {
+
+                                String desc = (d.getNome_despesa() != null && !d.getNome_despesa().isEmpty())
+                                        ? d.getNome_despesa()
+                                        : "Despesa";
+
+                                String data = (d.getData() != null) ? d.getData() : "--/--";
+
+                                listaUnificada.add(
+                                        new Dados(d.getId(), desc, d.getValor(), data, "DESPESA")
+                                );
+                            }
+                        }
+                        atualizarInterface();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DespesaModel>> call, Throwable t) {
+                        atualizarInterface();
+                    }
+                });
     }
+
+    // --------------------------- INTERFACE ------------------------------
 
     private void atualizarInterface() {
         double receitaTotal = 0;
@@ -167,6 +169,7 @@ public class TelaCarteira extends AppCompatActivity {
                 despesaTotal += d.getValor();
             }
         }
+
         double saldo = receitaTotal - despesaTotal;
 
         txtTotalReceitas.setText("+ R$ " + String.format("%.2f", receitaTotal));
@@ -178,32 +181,26 @@ public class TelaCarteira extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-
-
     private void showDialogEscolha() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
-
         View view = getLayoutInflater().inflate(R.layout.dialog_escolha, null);
+
         dialog.setContentView(view);
 
-        if (dialog.getWindow() != null) {
+        if (dialog.getWindow() != null)
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
 
-        // Clique na opção RECEITA
         LinearLayout btnReceita = view.findViewById(R.id.btn_escolha_receita);
+        LinearLayout btnDespesa = view.findViewById(R.id.btn_escolha_despesa);
+
         btnReceita.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent intent = new Intent(TelaCarteira.this, TelaAdicionarReceita.class);
-            startActivity(intent);
+            startActivity(new Intent(TelaCarteira.this, TelaAdicionarReceita.class));
         });
 
-        // Clique na opção DESPESA
-        LinearLayout btnDespesa = view.findViewById(R.id.btn_escolha_despesa);
         btnDespesa.setOnClickListener(v -> {
             dialog.dismiss();
-            Intent intent = new Intent(TelaCarteira.this, TelaAdicionarDespesas.class);
-            startActivity(intent);
+            startActivity(new Intent(TelaCarteira.this, TelaAdicionarDespesas.class));
         });
 
         dialog.show();

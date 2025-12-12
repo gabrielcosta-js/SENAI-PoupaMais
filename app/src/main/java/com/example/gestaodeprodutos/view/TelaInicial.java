@@ -3,6 +3,7 @@ package com.example.gestaodeprodutos.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.example.gestaodeprodutos.model.DespesaModel;
@@ -46,14 +48,12 @@ public class TelaInicial extends AppCompatActivity {
         ImageView btnVoltarMes = findViewById(R.id.btn_voltar_mes);
 
         fabAdd.setOnClickListener(v -> {
-            Toast.makeText(this, "Abrir Adicionar Despesa", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, TelaAdicionarDespesas.class);
-            startActivity(intent);
+             showDialogEscolha();
         });
 
         btnWallet.setOnClickListener(v -> {
             Toast.makeText(this, "Abrir Carteira", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, TelaAdicionarReceita.class);
+            Intent intent = new Intent(this, TelaCarteira.class);
             startActivity(intent);
         });
 
@@ -88,7 +88,6 @@ public class TelaInicial extends AppCompatActivity {
             txtDespesasValor.setText("R$ " + String.format(Locale.getDefault(), "%.2f", despesas));
         }
 
-        // TODO: Você precisará de lógica para atualizar as porcentagens (+12% este mês)
     }
 
     /**
@@ -116,20 +115,38 @@ public class TelaInicial extends AppCompatActivity {
         }
     }
 
-    /**
-     * Simula o carregamento de dados (substituir por acesso ao banco de dados real)
-     */
+
     private List<DespesaModel> carregarDespesasSimuladas() {
         List<DespesaModel> lista = new ArrayList<>();
 
-        // Dados de Exemplo (Baseado no seu design)
-        lista.add(new DespesaModel(1, "Mercado Extra", -234.50, "05/11", "Mercado"));
-        lista.add(new DespesaModel(2, "Starbucks", -18.90, "06/11", "Alimentação"));
-        lista.add(new DespesaModel(3, "Uber", -25.00, "06/11", "Transporte"));
-        lista.add(new DespesaModel(4, "Netflix", -39.90, "07/11", "Streaming"));
-        lista.add(new DespesaModel(5, "Farmácia", -67.30, "08/11", "Saúde"));
-        lista.add(new DespesaModel(6, "Salário", 3500.00, "01/11", "Receita")); // Exemplo de Receita
-
         return lista;
+    }
+    private void showDialogEscolha() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_escolha, null);
+        dialog.setContentView(view);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        // Clique na opção RECEITA
+        LinearLayout btnReceita = view.findViewById(R.id.btn_escolha_receita);
+        btnReceita.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = new Intent(TelaInicial.this, TelaAdicionarReceita.class);
+            startActivity(intent);
+        });
+
+        // Clique na opção DESPESA
+        LinearLayout btnDespesa = view.findViewById(R.id.btn_escolha_despesa);
+        btnDespesa.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = new Intent(TelaInicial.this, TelaAdicionarDespesas.class);
+            startActivity(intent);
+        });
+
+        dialog.show();
     }
 }

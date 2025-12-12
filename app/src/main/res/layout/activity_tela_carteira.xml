@@ -141,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/black"
+        app:backgroundTint="@color/verde_principal"
         app:elevation="10dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
