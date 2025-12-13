@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
-import com.example.gestaodeprodutos.adapter.DadosAdapter;
-import com.example.gestaodeprodutos.model.Dados;
+import com.example.gestaodeprodutos.adapter.MovimentacaoAdapter;
+import com.example.gestaodeprodutos.adapter.ReceitaAdapter;
 import com.example.gestaodeprodutos.model.DespesaModel;
+import com.example.gestaodeprodutos.model.Dados;
 import com.example.gestaodeprodutos.model.ReceitaModel;
 import com.example.gestaodeprodutos.network.RetrofitClient_professor;
 import com.example.gestaodeprodutos.network.SupabaseService;
@@ -176,7 +177,8 @@ public class TelaCarteira extends AppCompatActivity {
         txtTotalDespesas.setText("- R$ " + String.format("%.2f", despesaTotal));
         txtSaldoTotal.setText("R$ " + String.format("%.2f", saldo));
 
-        DadosAdapter adapter = new DadosAdapter(listaUnificada);
+        MovimentacaoAdapter adapter = new MovimentacaoAdapter(listaUnificada);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

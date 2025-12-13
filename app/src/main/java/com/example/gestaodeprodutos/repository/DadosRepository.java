@@ -1,4 +1,6 @@
 package com.example.gestaodeprodutos.repository;
+import android.content.Context;
+
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -22,17 +24,17 @@ import retrofit2.Response;
  * --> Aqui você configura as keys e chama os endpoints do ApiService.
  */
 public class DadosRepository {
-    // Instância da interface que contém as rotas da API
+
     private SupabaseService apiService;
 
-    // 🔵 ALTERAR AQUI:
-    // Sua ANON KEY do projeto Supabase
     private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW";
 
-    public DadosRepository() {
-        // Cria a ApiService usando o Retrofit configurado no RetrofitClient
-        apiService = RetrofitSupabase.getRetrofitInstance().create(SupabaseService.class);
+    public DadosRepository(Context context) {
+        apiService = RetrofitSupabase
+                .getRetrofitInstance(context)
+                .create(SupabaseService.class);
     }
+
 
     // =======================================================
     // 🔵 LISTAR PRODUTOS

@@ -36,12 +36,9 @@
         <activity
             android:name=".view.TelaInicial"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true" >
+            android:exported="false" >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".view.TelaEsqueceuSenha"
@@ -54,9 +51,12 @@
         <activity
             android:name=".view.TelaLoginMainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" >
+            android:exported="true" >
 
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

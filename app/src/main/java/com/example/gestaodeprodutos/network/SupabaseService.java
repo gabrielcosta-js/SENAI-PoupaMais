@@ -111,7 +111,7 @@ public interface SupabaseService {
             @Header("Authorization") String auth,
 
             // Query parameter vira: ?id=eq.ID
-            @Query("id") String id,                 // MEXE → nome do campo usado no filtro (id)
+            @Query("id_despesas") String id,                 // MEXE → nome do campo usado no filtro (id)
             // Supabase transforma isso em: id=eq.valor
 
             @Body DespesaModel despesaModel         // MEXE → tipo do objeto
@@ -126,7 +126,7 @@ public interface SupabaseService {
             @Header("Authorization") String auth,
 
             // Query parameter vira: ?id=eq.ID
-            @Query("id") String id,                 // MEXE → nome do campo usado no filtro (id)
+            @Query("id_receita") String id,                 // MEXE → nome do campo usado no filtro (id)
             // Supabase transforma isso em: id=eq.valor
 
             @Body ReceitaModel receitaModel          // MEXE → tipo do objeto
@@ -148,7 +148,7 @@ public interface SupabaseService {
     Call<Void> deletarDespesa(
             @Header("apikey") String apiKey,
             @Header("Authorization") String auth,
-            @Query("id") String id                  // MEXE → campo utilizado no WHERE
+            @Query("id_despesas") String id                  // MEXE → campo utilizado no WHERE
             // Fica assim: ?id=eq.3
     );
     @DELETE("rest/v1/receitas")
@@ -157,7 +157,7 @@ public interface SupabaseService {
     Call<Void> deletarReceita(
             @Header("apikey") String apiKey,
             @Header("Authorization") String auth,
-            @Query("id") String id                  // MEXE → campo utilizado no WHERE
+            @Query("id_receita") String id                  // MEXE → campo utilizado no WHERE
             // Fica assim: ?id=eq.3
     );
 }

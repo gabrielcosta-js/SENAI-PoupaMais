@@ -14,7 +14,7 @@ import com.example.gestaodeprodutos.model.Produto_professor;
 
 import java.util.List;
 
-public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHolder> {
+public class ProdutoAdapter_professor extends RecyclerView.Adapter<ProdutoAdapter_professor.ViewHolder> {
 
     private List<Produto_professor> lista;
     private ProdutoListener listener;
@@ -24,7 +24,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
         void onDeletarClick(Produto_professor p);
     }
 
-    public ProdutoAdapter(List<Produto_professor> lista, ProdutoListener listener) {
+    public ProdutoAdapter_professor(List<Produto_professor> lista, ProdutoListener listener) {
         this.lista = lista;
         this.listener = listener;
     }

@@ -1,87 +1,97 @@
 package com.example.gestaodeprodutos.viewmodel;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel; // <-- IMPORT NECESSÁRIO por causa dissp aqui  // INICIALIZAÇÕES
-// dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
-import com.example.gestaodeprodutos.model.Dados;
+import androidx.lifecycle.ViewModel;
+
 import com.example.gestaodeprodutos.model.DespesaModel;
-import com.example.gestaodeprodutos.model.Produto_professor;
 import com.example.gestaodeprodutos.model.ReceitaModel;
 import com.example.gestaodeprodutos.repository.DadosRepository;
-import com.example.gestaodeprodutos.repository.ProdutoRepository_professor;
 
 import java.util.List;
 
 public class DadosViewModel extends ViewModel {
 
-    // Ligação com a classe
-    private final DadosRepository repositoryDespesa;
-    private final DadosRepository repositoryReceita;
+    private DadosRepository repository;
 
     private final MutableLiveData<List<DespesaModel>> despesaModel = new MutableLiveData<>();
     private final MutableLiveData<List<ReceitaModel>> receitaModel = new MutableLiveData<>();
 
-    public DadosViewModel() {
-        repositoryDespesa = new DadosRepository();
-        repositoryReceita = new DadosRepository();
+    // 🔹 Inicialização correta
+    public void init(Context context) {
+        repository = new DadosRepository(context);
     }
 
-    // Get para despesa e Receita Conecta a mutable despesa model
+    // GETTERS
     public LiveData<List<DespesaModel>> getDespesa() {
         return despesaModel;
     }
+
     public LiveData<List<ReceitaModel>> getReceita() {
         return receitaModel;
     }
 
-    // Carregar Receita e Despesa
+    // CARREGAR
     public void carregarDespesa(String token) {
-        repositoryDespesa.listarDespesa(despesaModel, token);
+        repository.listarDespesa(despesaModel, token);
     }
+
     public void carregarReceita(String token) {
-        repositoryReceita.listarReceita(receitaModel, token);
+        repository.listarReceita(receitaModel, token);
     }
 
-
-    // Inserir Despesa e Receita
-    public LiveData<Boolean> inserirDespesa(double valor, String categoria, String data, String nome_despesa, String descricao, String forma_pagamento, String token) {
-        DespesaModel p = new DespesaModel(valor, categoria, data, nome_despesa, descricao, forma_pagamento);
-        System.out.println(p.getValor());
-        return repositoryDespesa.inserirDespesa(p, token);
-    }
-    public LiveData<Boolean> inserirReceita(double valor, String categoria, String data, String nomeReceita,String descricao, String token) {
-        ReceitaModel p = new ReceitaModel(valor, categoria,data, nomeReceita, descricao);
-        return repositoryReceita.inserirReceita(p, token);
-    }
-
-    // Atualizar/Alterar Despesa e Receita
-    public LiveData<Boolean> alterarDespesa(int id, double valor, String categoria, String data, String nome_despesa, String descricao, String forma_pagamento, String token) {
-        DespesaModel p = new DespesaModel(id, valor, categoria, data, nome_despesa, descricao, forma_pagamento);
-        return repositoryDespesa.alterarDespesa(p, token);
-    }
-    public LiveData<Boolean> alterarReceita(int id, double valor, String categoria, String data, String nomeReceita,String descricao, String token) {
-        ReceitaModel p = new ReceitaModel(id, valor, categoria,data, nomeReceita, descricao);
-        return repositoryReceita.alterarReceita(p, token);
+    // INSERIR
+    public LiveData<Boolean> inserirDespesa(
+            double valor, String categoria, String data,
+            String nomeDespesa, String descricao,
+            String formaPagamento, String token
+    ) {
+        DespesaModel p = new DespesaModel(
+                valor, categoria, data, nomeDespesa, descricao, formaPagamento
+        );
+        return repository.inserirDespesa(p, token);
     }
 
-    // Apagar Despesa e Receita
+    public LiveData<Boolean> inserirReceita(
+            double valor, String categoria, String data,
+            String nomeReceita, String descricao, String token
+    ) {
+        ReceitaModel p = new ReceitaModel(
+                valor, categoria, data, nomeReceita, descricao
+        );
+        return repository.inserirReceita(p, token);
+    }
+
+    // ALTERAR
+    public LiveData<Boolean> alterarDespesa(
+            int id, double valor, String categoria, String data,
+            String nomeDespesa, String descricao,
+            String formaPagamento, String token
+    ) {
+        DespesaModel p = new DespesaModel(
+                id, valor, categoria, data, nomeDespesa, descricao, formaPagamento
+        );
+        return repository.alterarDespesa(p, token);
+    }
+
+    public LiveData<Boolean> alterarReceita(
+            int id, double valor, String categoria, String data,
+            String nomeReceita, String descricao, String token
+    ) {
+        ReceitaModel p = new ReceitaModel(
+                id, valor, categoria, data, nomeReceita, descricao
+        );
+        return repository.alterarReceita(p, token);
+    }
+
+    // DELETAR
     public LiveData<Boolean> deletarDespesa(int id, String token) {
-        return repositoryDespesa.deletarDespesa(id, token);
+        return repository.deletarDespesa(id, token);
     }
+
     public LiveData<Boolean> deletarReceita(int id, String token) {
-        return repositoryReceita.deletarReceita(id, token);
-    }
-
-
-    // Usuário
-    static Dados dados = new Dados();
-
-    public boolean validarDadosLogin(String email, String senha){
-        return email.equals(dados.getEmail()) && senha.equals(dados.getSenha());
-    }
-
-    public void setCadastrarUsuario(String nome, String email, String senha) {
-        dados = new Dados(nome, email, senha);
+        return repository.deletarReceita(id, token);
     }
 }

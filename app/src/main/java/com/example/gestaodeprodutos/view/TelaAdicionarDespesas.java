@@ -67,9 +67,16 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
                 return;
             }
 
+            // Pegar o token do usuário e mandar
+            String token = getSharedPreferences("APP", MODE_PRIVATE)
+                    .getString("TOKEN", "");
+
+
             Double valorDespesa = Double.parseDouble(valor);
 
             dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+            dadosViewModel.init(this);
+
 
             dadosViewModel.inserirDespesa(
                     valorDespesa,
@@ -78,7 +85,7 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
                     nomeDespesa,
                     descricaoDespesa,
                     formaPagamento,
-                    API_KEY
+                    token
             );
 
             Toast.makeText(this,
@@ -130,7 +137,7 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
                         // Formata para dd/mm/aaaa
                         String dia = dayOfMonth < 10 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
                         String mes = (monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : String.valueOf(monthOfYear + 1);
-                        edt_Data.setText(dia + "/" + mes + "/" + year1);
+                        edt_Data.setText(year1 + "-" + mes + "-" + dia);
                     }, year, month, day);
             datePickerDialog.show();
         });

@@ -3,6 +3,7 @@ package com.example.gestaodeprodutos.view;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -17,6 +18,8 @@ public class TelaEsqueceuSenha extends AppCompatActivity {
 
     private EditText edtEsqueceuSenhaEmail;
     private Button btnEsqueceuSenhaEnviarEmail;
+
+    private ImageView btn_voltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,12 @@ public class TelaEsqueceuSenha extends AppCompatActivity {
         // INICIALIZAÇÃO DAS VIEWS
         edtEsqueceuSenhaEmail = findViewById(R.id.edtEsqueceuSenhaEmail);
         btnEsqueceuSenhaEnviarEmail = findViewById(R.id.btnEsqueceuSenhaEnviarEmail);
+        btn_voltar = findViewById(R.id.btn_voltar);
 
+        // BOTÃO: Voltar
+        btn_voltar.setOnClickListener(v -> {
+            finish();
+        });
         //  BOTÃO: ENVIAR E-MAIL
         btnEsqueceuSenhaEnviarEmail.setOnClickListener(v -> {
             String email = edtEsqueceuSenhaEmail.getText().toString();

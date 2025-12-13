@@ -9,19 +9,25 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gestaodeprodutos.R;
+import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
 
 import java.util.Calendar;
 
 public class TelaAdicionarReceita extends AppCompatActivity {
 
     private ImageView btnVoltar;
-    private EditText edtValor, edtData, edtDescricao, edtDetalhes;
+    private EditText edtValor, edtData, edtNomeReceita, edtDescricao;
     private Button btnSalvar;
 
     private String categoriaSelecionada = "";
     private LinearLayout[] categoriasViews;
+
+    private DadosViewModel dadosViewModel;
+
+    private final String API_KEY = "SUA_ANON_KEY_AQUI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,7 @@ public class TelaAdicionarReceita extends AppCompatActivity {
         setContentView(R.layout.activity_tela_adicionar_receita);
 
         initViews();
-        setupCategoryClicks();
+        setupCategoryClicks();   // 🔥 MESMO PADRÃO DA DESPESA
         setupDatePicker();
 
         btnVoltar.setOnClickListener(v -> finish());
@@ -41,11 +47,10 @@ public class TelaAdicionarReceita extends AppCompatActivity {
         btnVoltar = findViewById(R.id.btn_voltar);
         edtValor = findViewById(R.id.edt_valor);
         edtData = findViewById(R.id.edt_data);
-        edtDescricao = findViewById(R.id.edt_descricao);
-        edtDetalhes = findViewById(R.id.edt_detalhes);
+        edtNomeReceita = findViewById(R.id.edtNomeReceita);
+        edtDescricao = findViewById(R.id.edtDescricao);
         btnSalvar = findViewById(R.id.btn_salvar);
 
-        // Lista das categorias desta tela
         categoriasViews = new LinearLayout[]{
                 findViewById(R.id.cat_salario),
                 findViewById(R.id.cat_freelance),
@@ -54,30 +59,53 @@ public class TelaAdicionarReceita extends AppCompatActivity {
                 findViewById(R.id.cat_economia),
                 findViewById(R.id.cat_outros)
         };
+
+        dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+        dadosViewModel.init(this);
+
     }
 
     private void salvarReceita() {
         String valor = edtValor.getText().toString();
         String data = edtData.getText().toString();
-        String nome = edtDescricao.getText().toString();
+        String nome = edtNomeReceita.getText().toString();
+        String descricao = edtDescricao.getText().toString();
 
         if (valor.isEmpty()) {
             Toast.makeText(this, "Digite o valor da receita", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (categoriaSelecionada.isEmpty()) {
             Toast.makeText(this, "Escolha uma categoria", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (data.isEmpty()) {
             Toast.makeText(this, "Selecione a data", Toast.LENGTH_SHORT).show();
             return;
         }
+        // Pegar o token do usuário e mandar
+        String token = getSharedPreferences("APP", MODE_PRIVATE)
+                .getString("TOKEN", "");
 
-        String mensagem = "Salvando Receita: " + nome + " (" + categoriaSelecionada + ") - R$ " + valor;
-        Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
+        Double valorReceita = Double.parseDouble(valor);
 
-         finish();
+        // 👉 MESMA IDEIA DA DESPESA
+        dadosViewModel.inserirReceita(
+                valorReceita,
+                categoriaSelecionada,
+                data,
+                nome,
+                descricao,
+                token
+        );
+
+        Toast.makeText(this,
+                "Salvando Receita: " + nome + " (" + categoriaSelecionada + ") - R$ " + valor,
+                Toast.LENGTH_LONG).show();
+
+        finish();
     }
 
     private void setupDatePicker() {
@@ -91,8 +119,9 @@ public class TelaAdicionarReceita extends AppCompatActivity {
                     (view, year1, monthOfYear, dayOfMonth) -> {
                         String dia = dayOfMonth < 10 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
                         String mes = (monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : String.valueOf(monthOfYear + 1);
-                        edtData.setText(dia + "/" + mes + "/" + year1);
+                        edtData.setText(year1 + "-" + mes + "-" + dia);
                     }, year, month, day);
+
             datePickerDialog.show();
         });
     }
