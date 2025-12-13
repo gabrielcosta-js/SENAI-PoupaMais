@@ -54,9 +54,9 @@ public class TelaCadastroUsuario extends AppCompatActivity {
 
         // BOTÃO: CRIAR CONTA
         btnCadastroCriarConta.setOnClickListener(v -> {
-            String nome = edtCadastroNome.getText().toString();
-            String email = edtCadastroEmail.getText().toString();
-            String senha = edtCadastroSenha.getText().toString();
+            String nome = edtCadastroNome.getText().toString().trim();
+            String email = edtCadastroEmail.getText().toString().trim();
+            String senha = edtCadastroSenha.getText().toString().trim();
 
             if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
@@ -65,20 +65,18 @@ public class TelaCadastroUsuario extends AppCompatActivity {
 
             viewModel.registrar(nome, email, senha).observe(this, res -> {
                 if (res == null) {
-                    Toast.makeText(this, "Erro ao registrar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Erro ao criar conta", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "Conta criada com sucesso!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(this, TelaLoginMainActivity.class));
-                    finish();
+                    finish(); // fecha SÓ depois do sucesso
                 }
             });
         });
 
 
+
         // TEXTO: JÁ TENHO LOGIN
         txtCadastroIniciarLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TelaLoginMainActivity.class);
-            startActivity(intent);
             finish();
         });
     }

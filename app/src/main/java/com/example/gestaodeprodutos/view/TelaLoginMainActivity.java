@@ -1,6 +1,7 @@
 package com.example.gestaodeprodutos.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,7 +50,6 @@ public class TelaLoginMainActivity extends AppCompatActivity {
         txtLoginEsqueceuSenha.setOnClickListener(v -> {
             Intent intent = new Intent(this, TelaEsqueceuSenha.class);
             startActivity(intent);
-            finish();
         });
 
         // Clique: Entrar
@@ -69,15 +69,40 @@ public class TelaLoginMainActivity extends AppCompatActivity {
                     return;
                 }
 
+                String accessToken = res.getAccess_token();
+
+                // ===== EXTRAIR NOME DO TOKEN =====
+                String nomeUsuario = "Usuário";
+                try {
+                    String[] parts = accessToken.split("\\.");
+                    String payload = new String(
+                            android.util.Base64.decode(parts[1], android.util.Base64.URL_SAFE)
+                    );
+
+                    org.json.JSONObject json = new org.json.JSONObject(payload);
+                    org.json.JSONObject userMetadata = json.getJSONObject("user_metadata");
+                    nomeUsuario = userMetadata.getString("nome");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 // Salvar token
                 getSharedPreferences("APP", MODE_PRIVATE)
                         .edit()
-                        .putString("TOKEN", res.getToken_type() + " " + res.getAccess_token())
+                        .putString("TOKEN", res.getToken_type() + " " + accessToken)
+                        .apply();
+
+                // Salvar nome do usuário
+                getSharedPreferences("usuario", MODE_PRIVATE)
+                        .edit()
+                        .putString("nome", nomeUsuario)
                         .apply();
 
                 startActivity(new Intent(this, TelaInicial.class));
                 finish();
             });
+
 
 
         });
@@ -86,7 +111,7 @@ public class TelaLoginMainActivity extends AppCompatActivity {
         txtLoginCriarConta.setOnClickListener(v -> {
             Intent intent = new Intent(this, TelaCadastroUsuario.class);
             startActivity(intent);
-            finish();
+
         });
     }
 }

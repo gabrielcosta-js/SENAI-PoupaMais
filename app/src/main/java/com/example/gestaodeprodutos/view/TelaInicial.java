@@ -2,6 +2,7 @@ package com.example.gestaodeprodutos.view;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
+import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,9 +29,16 @@ import java.util.Locale;
 
 public class TelaInicial extends AppCompatActivity {
 
+    private DadosViewModel dadosViewModel;
+    private DespesaAdapter despesaAdapter;
     private TextView txtMesAtual;
     private RecyclerView recyclerViewDespesas;
     private Calendar calendarioAtual;
+
+    private TextView txtSaudacao;
+
+
+
 
     private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW"; //  Anon key
 
@@ -71,8 +81,40 @@ public class TelaInicial extends AppCompatActivity {
             recyclerViewDespesas.setLayoutManager(new LinearLayoutManager(this));
         }
 
-        atualizarSaldos(4500.00, 2000.00);
-        atualizarTela();
+        dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+        dadosViewModel.init(this);
+
+// Adapter vazio inicialmente
+        despesaAdapter = new DespesaAdapter(new ArrayList<>());
+        recyclerViewDespesas.setAdapter(despesaAdapter);
+
+// Buscar token salvo
+        String token = getSharedPreferences("APP", MODE_PRIVATE)
+                .getString("TOKEN", "");
+
+
+// Observar resultado
+        dadosViewModel.getDespesa().observe(this, lista -> {
+
+            if (lista == null || lista.isEmpty()) {
+                Toast.makeText(this, "Nenhuma despesa registrada", Toast.LENGTH_SHORT).show();
+                despesaAdapter.atualizarLista(new ArrayList<>());
+                return;
+            }
+
+            despesaAdapter.atualizarLista(lista);
+        });
+
+        txtSaudacao = findViewById(R.id.txt_saudacao);
+
+
+        // Mostrar nome do usuário
+        SharedPreferences prefs = getSharedPreferences("usuario", MODE_PRIVATE);
+        String nome = prefs.getString("nome", "Usuário");
+
+        txtSaudacao.setText("Olá, " + nome);
+
+
     }
 
     private void atualizarSaldos(double receita, double despesas) {
@@ -95,32 +137,13 @@ public class TelaInicial extends AppCompatActivity {
      */
     private void mudarMes(int delta) {
         calendarioAtual.add(Calendar.MONTH, delta);
-        atualizarTela();
+
     }
 
     /**
      * Atualiza o nome do mês e carrega a lista de despesas
      */
-    private void atualizarTela() {
 
-        String nomeMes = calendarioAtual.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-        txtMesAtual.setText(nomeMes);
-
-        List<DespesaModel> despesasDoMes = carregarDespesasSimuladas();
-
-        if (recyclerViewDespesas != null) {
-
-            DespesaAdapter despesaAdapter = new DespesaAdapter(despesasDoMes);
-            recyclerViewDespesas.setAdapter(despesaAdapter);
-        }
-    }
-
-
-    private List<DespesaModel> carregarDespesasSimuladas() {
-        List<DespesaModel> lista = new ArrayList<>();
-
-        return lista;
-    }
     private void showDialogEscolha() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
 
@@ -149,4 +172,16 @@ public class TelaInicial extends AppCompatActivity {
 
         dialog.show();
     }
+    // Carregar as despesas criadas
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String token = getSharedPreferences("APP", MODE_PRIVATE)
+                .getString("TOKEN", "");
+
+        dadosViewModel.carregarDespesa(token);
+
+    }
+
 }

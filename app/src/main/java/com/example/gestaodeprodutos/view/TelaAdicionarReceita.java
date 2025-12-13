@@ -61,6 +61,8 @@ public class TelaAdicionarReceita extends AppCompatActivity {
         };
 
         dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+        dadosViewModel.init(this);
+
     }
 
     private void salvarReceita() {
@@ -83,6 +85,9 @@ public class TelaAdicionarReceita extends AppCompatActivity {
             Toast.makeText(this, "Selecione a data", Toast.LENGTH_SHORT).show();
             return;
         }
+        // Pegar o token do usuário e mandar
+        String token = getSharedPreferences("APP", MODE_PRIVATE)
+                .getString("TOKEN", "");
 
         Double valorReceita = Double.parseDouble(valor);
 
@@ -93,7 +98,7 @@ public class TelaAdicionarReceita extends AppCompatActivity {
                 data,
                 nome,
                 descricao,
-                API_KEY
+                token
         );
 
         Toast.makeText(this,
@@ -114,7 +119,7 @@ public class TelaAdicionarReceita extends AppCompatActivity {
                     (view, year1, monthOfYear, dayOfMonth) -> {
                         String dia = dayOfMonth < 10 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
                         String mes = (monthOfYear + 1) < 10 ? "0" + (monthOfYear + 1) : String.valueOf(monthOfYear + 1);
-                        edtData.setText(dia + "/" + mes + "/" + year1);
+                        edtData.setText(year1 + "-" + mes + "-" + dia);
                     }, year, month, day);
 
             datePickerDialog.show();

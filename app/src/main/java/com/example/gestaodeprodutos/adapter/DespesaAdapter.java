@@ -21,6 +21,10 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
     public DespesaAdapter(List<DespesaModel> listaDespesas) {
         this.listaDespesas = listaDespesas;
     }
+    public void atualizarLista(List<DespesaModel> novaLista) {
+        this.listaDespesas = novaLista;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -44,7 +48,7 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
             holder.txtValorDespesa.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.holo_red_dark));
         } else {
             holder.txtValorDespesa.setText("+ " + valorFormatado);
-            holder.txtValorDespesa.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.holo_green_dark));
+            holder.txtValorDespesa.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.black));
         }
 
         defineIconePorCategoria(despesa.getCategoria(), holder.imgIconeDespesa);
@@ -73,13 +77,17 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
                 break;
             case "saúde":
             case "farmácia":
-                drawableRes = R.drawable.ic_attach_money;
+                drawableRes = R.drawable.ic_favorite;
                 break;
             case "serviços":
             case "streaming":
-            case "assinatura":
+            case "lazer":
                 drawableRes = R.drawable.ic_smartphone;
                 break;
+            case "moradia":
+                drawableRes = R.drawable.ic_home;
+                break;
+
             default:
                 drawableRes = R.drawable.ic_more_horiz;
                 break;
