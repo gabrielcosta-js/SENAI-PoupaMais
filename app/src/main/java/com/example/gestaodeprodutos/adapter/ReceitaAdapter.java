@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
-import com.example.gestaodeprodutos.model.Dados;
+import com.example.gestaodeprodutos.model.ReceitaModel;
 
 import java.util.List;
 
-public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.ViewHolder> {
+public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ViewHolder> {
 
-    private List<Dados> listaDados;
+    private List<ReceitaModel> listaDados;
 
-    public DadosAdapter(List<Dados> lista) {
+    public ReceitaAdapter(List<ReceitaModel> lista) {
         this.listaDados = lista;
     }
 
@@ -32,21 +32,16 @@ public class DadosAdapter extends RecyclerView.Adapter<DadosAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Dados item = listaDados.get(position);
+        ReceitaModel item = listaDados.get(position);
 
-        // Preenche os textos
         holder.textDescricao.setText(item.getDescricao());
         holder.textData.setText(item.getData());
 
-        // Lógica das Cores (Verde para Receita, Vermelho para Despesa)
-        if ("RECEITA".equalsIgnoreCase(item.getTipo())) {
-            holder.textValor.setText("+ R$ " + String.format("%.2f", item.getValor()));
-            holder.textValor.setTextColor(Color.parseColor("#00E676")); // Verde
-        } else {
-            holder.textValor.setText("- R$ " + String.format("%.2f", item.getValor()));
-            holder.textValor.setTextColor(Color.parseColor("#FF5252")); // Vermelho
-        }
+        // Receita SEMPRE é verde
+        holder.textValor.setText("+ R$ " + String.format("%.2f", item.getValor()));
+        holder.textValor.setTextColor(Color.parseColor("#00E676"));
     }
+
 
     @Override
     public int getItemCount() {

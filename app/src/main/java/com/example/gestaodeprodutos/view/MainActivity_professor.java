@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.gestaodeprodutos.R;
-import com.example.gestaodeprodutos.adapter.ProdutoAdapter;
+import com.example.gestaodeprodutos.adapter.ProdutoAdapter_professor;
 import com.example.gestaodeprodutos.model.Produto_professor;
 import com.example.gestaodeprodutos.viewmodel.ProdutoViewModel_professor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MainActivity_professor extends AppCompatActivity {
 
     private ProdutoViewModel_professor viewModel;
-    private ProdutoAdapter adapter;
+    private ProdutoAdapter_professor adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class MainActivity_professor extends AppCompatActivity {
                 .getString("token", null);
 
         //cria o adapter para a lista e um listener para funções dos botões
-        adapter = new ProdutoAdapter(new ArrayList<>(), new ProdutoAdapter.ProdutoListener() {
+        adapter = new ProdutoAdapter_professor(new ArrayList<>(), new ProdutoAdapter_professor.ProdutoListener() {
             @Override
             public void onEditarClick(Produto_professor produto) {
                 Intent intent = new Intent(MainActivity_professor.this, DetalhesProdutoActivity_professor.class);

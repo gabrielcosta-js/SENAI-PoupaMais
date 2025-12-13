@@ -131,7 +131,7 @@
             app:layout_constraintTop_toBottomOf="@+id/grid_categorias" />
 
         <EditText
-            android:id="@+id/edt_descricao"
+            android:id="@+id/edtNomeReceita"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="12dp"
@@ -142,7 +142,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edt_data" />
 
         <EditText
-            android:id="@+id/edt_detalhes"
+            android:id="@+id/edtDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="100dp"
@@ -152,7 +152,7 @@
             android:gravity="top"
             android:hint="Descrição (opcional)"
             android:inputType="textMultiLine"
-            app:layout_constraintTop_toBottomOf="@+id/edt_descricao" />
+            app:layout_constraintTop_toBottomOf="@+id/edtNomeReceita" />
 
         <Button
             android:id="@+id/btn_salvar"
@@ -167,7 +167,7 @@
             android:textSize="16sp"
             app:cornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_detalhes"
+            app:layout_constraintTop_toBottomOf="@+id/edtDescricao"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

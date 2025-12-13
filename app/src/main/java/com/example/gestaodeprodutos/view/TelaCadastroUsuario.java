@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gestaodeprodutos.R;
-import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
+import com.example.gestaodeprodutos.viewmodel.AuthViewModel;
+import com.example.gestaodeprodutos.viewmodel.AuthViewModel_professor;
 
 public class TelaCadastroUsuario extends AppCompatActivity {
 
@@ -23,7 +25,8 @@ public class TelaCadastroUsuario extends AppCompatActivity {
     private EditText edtCadastroSenha;
     private Button btnCadastroCriarConta;
     private TextView txtCadastroIniciarLogin;
-    private DadosViewModel dadosViewModel;
+
+    private AuthViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,9 @@ public class TelaCadastroUsuario extends AppCompatActivity {
         });
 
         // INICIALIZAÇÕES
-        dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        viewModel.init(this); // 🔴 LINHA QUE FALTAVA
+
 
         edtCadastroNome = findViewById(R.id.edtCadastroNome);
         edtCadastroEmail = findViewById(R.id.edtCadastroEmail);
@@ -53,15 +58,22 @@ public class TelaCadastroUsuario extends AppCompatActivity {
             String email = edtCadastroEmail.getText().toString();
             String senha = edtCadastroSenha.getText().toString();
 
-            // Envia os dados para o ViewModel
-            dadosViewModel.setCadastrarUsuario(nome, email, senha);
+            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            // Vai para tela de Login
-            Intent intent = new Intent(this, TelaLoginMainActivity.class);
-            startActivity(intent);
-
-            finish(); // fecha tela de cadastro
+            viewModel.registrar(nome, email, senha).observe(this, res -> {
+                if (res == null) {
+                    Toast.makeText(this, "Erro ao registrar", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Conta criada com sucesso!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(this, TelaLoginMainActivity.class));
+                    finish();
+                }
+            });
         });
+
 
         // TEXTO: JÁ TENHO LOGIN
         txtCadastroIniciarLogin.setOnClickListener(v -> {
