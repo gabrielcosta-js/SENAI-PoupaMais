@@ -10,6 +10,8 @@ import com.example.gestaodeprodutos.model.DespesaModel;
 import com.example.gestaodeprodutos.model.ReceitaModel;
 import com.example.gestaodeprodutos.repository.DadosRepository;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DadosViewModel extends ViewModel {
@@ -32,6 +34,52 @@ public class DadosViewModel extends ViewModel {
     public LiveData<List<ReceitaModel>> getReceita() {
         return receitaModel;
     }
+
+    // 🔹 HOME - mostrar apenas 5 DESPESAS
+    public LiveData<List<DespesaModel>> getUltimas5Despesas() {
+        MutableLiveData<List<DespesaModel>> ultimas = new MutableLiveData<>();
+
+        despesaModel.observeForever(lista -> {
+            if (lista == null || lista.isEmpty()) {
+                ultimas.setValue(new ArrayList<>());
+                return;
+            }
+
+            // 🔹 Ordena da mais recente para a mais antiga
+            Collections.sort(lista, (d1, d2) ->
+                    d2.getId() - d1.getId()
+            );
+
+            int limite = Math.min(lista.size(), 5);
+            ultimas.setValue(new ArrayList<>(lista.subList(0, limite)));
+        });
+
+        return ultimas;
+    }
+
+
+    // 🔹 HOME - mostrar apenas 5 RECEITAS
+    public LiveData<List<ReceitaModel>> getUltimas5Receitas() {
+        MutableLiveData<List<ReceitaModel>> resultado = new MutableLiveData<>();
+
+        receitaModel.observeForever(lista -> {
+            if (lista == null || lista.isEmpty()) {
+                resultado.setValue(new ArrayList<>());
+                return;
+            }
+
+            // 🔹 Ordena da mais recente para a mais antiga
+            Collections.sort(lista, (r1, r2) ->
+                    r2.getId() - r1.getId()
+            );
+
+            int limite = Math.min(lista.size(), 5);
+            resultado.setValue(new ArrayList<>(lista.subList(0, limite)));
+        });
+
+        return resultado;
+    }
+
 
     // CARREGAR
     public void carregarDespesa(String token) {

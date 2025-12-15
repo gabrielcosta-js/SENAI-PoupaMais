@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,11 +17,21 @@ import java.util.Locale;
 
 public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaViewHolder> {
 
-    private List<DespesaModel> listaDespesas;
-
-    public DespesaAdapter(List<DespesaModel> listaDespesas) {
-        this.listaDespesas = listaDespesas;
+    // 🔹 Interface de clique
+    public interface OnDespesaClickListener {
+        void onDespesaClick(DespesaModel despesa);
     }
+
+    private List<DespesaModel> listaDespesas;
+    private OnDespesaClickListener listener;
+
+    // 🔹 Construtor
+    public DespesaAdapter(List<DespesaModel> listaDespesas,
+                          OnDespesaClickListener listener) {
+        this.listaDespesas = listaDespesas;
+        this.listener = listener;
+    }
+
     public void atualizarLista(List<DespesaModel> novaLista) {
         this.listaDespesas = novaLista;
         notifyDataSetChanged();
@@ -28,7 +39,6 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
 
     @NonNull
     @Override
-    // MÉTODO 1: Cria o ViewHolder (Infla o layout de cada item)
     public DespesaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_despesa, parent, false);
@@ -38,23 +48,38 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
     @Override
     public void onBindViewHolder(@NonNull DespesaViewHolder holder, int position) {
         DespesaModel despesa = listaDespesas.get(position);
+
         holder.txtNomeDespesa.setText(despesa.getDescricao());
         holder.txtCategoriaDespesa.setText(despesa.getCategoria());
 
-        String valorFormatado = String.format(Locale.getDefault(), "R$ %.2f", Math.abs(despesa.getValor()));
+        String valorFormatado = String.format(
+                Locale.getDefault(),
+                "R$ %.2f",
+                Math.abs(despesa.getValor())
+        );
 
-
-            holder.txtValorDespesa.setText("- " + valorFormatado);
-            holder.txtValorDespesa.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.holo_red_dark));
+        holder.txtValorDespesa.setText("- " + valorFormatado);
+        holder.txtValorDespesa.setTextColor(
+                holder.itemView.getContext()
+                        .getResources()
+                        .getColor(android.R.color.holo_red_dark)
+        );
 
         defineIconePorCategoria(despesa.getCategoria(), holder.imgIconeDespesa);
+
+        // 🔹 Clique no item
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDespesaClick(despesa);
+            }
+        });
     }
 
     @Override
-    // MÉTODO 3: Retorna o número total de itens na lista
     public int getItemCount() {
-        return listaDespesas.size();
+        return listaDespesas != null ? listaDespesas.size() : 0;
     }
+
     private void defineIconePorCategoria(String categoria, ImageView imageView) {
         int drawableRes;
 
@@ -83,21 +108,23 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
             case "moradia":
                 drawableRes = R.drawable.ic_home;
                 break;
-
             default:
                 drawableRes = R.drawable.ic_more_horiz;
                 break;
         }
+
         imageView.setImageResource(drawableRes);
     }
 
+    // 🔹 ViewHolder
     public static class DespesaViewHolder extends RecyclerView.ViewHolder {
+
         ImageView imgIconeDespesa;
         TextView txtNomeDespesa;
         TextView txtCategoriaDespesa;
         TextView txtValorDespesa;
 
-        public DespesaViewHolder(View itemView) {
+        public DespesaViewHolder(@NonNull View itemView) {
             super(itemView);
             imgIconeDespesa = itemView.findViewById(R.id.img_icone_despesa);
             txtNomeDespesa = itemView.findViewById(R.id.txt_nome_despesa);

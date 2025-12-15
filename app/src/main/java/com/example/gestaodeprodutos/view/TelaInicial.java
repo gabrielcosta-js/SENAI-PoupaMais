@@ -105,8 +105,8 @@ public class TelaInicial extends AppCompatActivity {
                 .getString("TOKEN", "");
 
 
-// Observar resultado desepsas
-        dadosViewModel.getDespesa().observe(this, lista -> {
+// Observar resultado das 5 últimas desepsas
+        dadosViewModel.getUltimas5Despesas().observe(this, lista -> {
 
             if (lista == null || lista.isEmpty()) {
                 totalDespesas = 0;
@@ -125,8 +125,9 @@ public class TelaInicial extends AppCompatActivity {
             atualizarSaldos();
         });
 
-    // Observar resultados receitas
-        dadosViewModel.getReceita().observe(this, lista -> {
+
+        // Observar resultados das 5 últimas receitas
+        dadosViewModel.getUltimas5Receitas().observe(this, lista -> {
 
             if (lista == null || lista.isEmpty()) {
                 totalReceitas = 0;
@@ -142,6 +143,7 @@ public class TelaInicial extends AppCompatActivity {
             atualizarSaldos();
         });
 
+
         txtSaudacao = findViewById(R.id.txt_saudacao);
 
 
@@ -150,6 +152,26 @@ public class TelaInicial extends AppCompatActivity {
         String nome = prefs.getString("nome", "Usuário");
 
         txtSaudacao.setText("Olá, " + nome);
+
+        despesaAdapter = new DespesaAdapter(new ArrayList<>(), despesa -> {
+
+            Intent intent = new Intent(
+                    TelaInicial.this,
+                    TelaAlterarDespesa.class
+            );
+
+            intent.putExtra("ID", despesa.getId());
+            intent.putExtra("VALOR", despesa.getValor());
+            intent.putExtra("CATEGORIA", despesa.getCategoria());
+            intent.putExtra("DATA", despesa.getData());
+            intent.putExtra("DESCRICAO", despesa.getDescricao());
+            intent.putExtra("FORMA_PAGAMENTO", despesa.getForma_pagamento());
+
+            startActivity(intent);
+        });
+
+        recyclerViewDespesas.setAdapter(despesaAdapter);
+
 
 
     }
