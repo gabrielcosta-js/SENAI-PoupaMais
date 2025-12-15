@@ -54,8 +54,12 @@ public class TelaCarteira extends AppCompatActivity {
     private ImageView imgHome, imgWallet;
     private TextView txtHome, txtWallet;
 
-    private List<Dados> listaUnificada = new ArrayList<>();
-    private SupabaseService service;
+
+    private TextView txt_total_receitas;
+    private TextView txt_total_despesas;
+
+    private double totalDespesas = 0.0;
+    private double totalReceitas = 0.0;
 
     private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW";
 
@@ -96,17 +100,68 @@ public class TelaCarteira extends AppCompatActivity {
     private void observarDados() {
 
         dadosViewModel.getReceita().observe(this, receitas -> {
-            if (receitas != null) {
+
+            if (receitas == null || receitas.isEmpty()) {
+                totalReceitas = 0;
+                txtTotalReceitas.setText("+ R$ 0,00");
+            } else {
                 receitaAdapter.atualizarLista(receitas);
+
+                totalReceitas = 0;
+                for (ReceitaModel r : receitas) {
+                    totalReceitas += r.getValor();
+                }
+
+                txtTotalReceitas.setText(
+                        "+ R$ " + String.format("%.2f", totalReceitas)
+                );
             }
+
+            atualizarSaldo();
         });
 
         dadosViewModel.getDespesa().observe(this, despesas -> {
-            if (despesas != null) {
+
+            if (despesas == null || despesas.isEmpty()) {
+                totalDespesas = 0;
+                txtTotalDespesas.setText("- R$ 0,00");
+            } else {
                 despesaAdapter.atualizarLista(despesas);
+
+                totalDespesas = 0;
+                for (DespesaModel d : despesas) {
+                    totalDespesas += Math.abs(d.getValor());
+                }
+
+                txtTotalDespesas.setText(
+                        "- R$ " + String.format("%.2f", totalDespesas)
+                );
             }
+
+            atualizarSaldo();
         });
     }
+
+    private void atualizarSaldo() {
+        double saldo = totalReceitas - totalDespesas;
+
+        txtSaldoTotal.setText(
+                "R$ " + String.format("%.2f", saldo)
+        );
+
+        // opcional: mudar cor do saldo
+        if (saldo < 0) {
+            txtSaldoTotal.setTextColor(
+                    ContextCompat.getColor(this, R.color.red)
+            );
+        } else {
+            txtSaldoTotal.setTextColor(
+                    ContextCompat.getColor(this, R.color.white)
+            );
+        }
+    }
+
+
 
     @Override
     protected void onResume() {
@@ -134,6 +189,9 @@ public class TelaCarteira extends AppCompatActivity {
         imgWallet = findViewById(R.id.img_wallet);
         txtHome = findViewById(R.id.txt_home);
         txtWallet = findViewById(R.id.txt_wallet);
+
+        txtTotalDespesas = findViewById(R.id.txt_total_despesas);
+        txtTotalReceitas = findViewById(R.id.txt_total_receitas);
     }
 
     private void setupNavigation() {
@@ -147,101 +205,19 @@ public class TelaCarteira extends AppCompatActivity {
 
         btnWallet.setOnClickListener(v -> {
             updateMenuColors(false);
-            carregarDadosDoSupabase();
             Toast.makeText(this, "Atualizando...", Toast.LENGTH_SHORT).show();
         });
     }
 
     // --------------------------- SUPABASE ------------------------------
 
-    private void carregarDadosDoSupabase() {
-        listaUnificada.clear();
 
-        // Buscar receitas
-        service.listarReceita(API_KEY, "Bearer " + API_KEY)
-                .enqueue(new Callback<List<ReceitaModel>>() {
-                    @Override
-                    public void onResponse(Call<List<ReceitaModel>> call, Response<List<ReceitaModel>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            for (ReceitaModel r : response.body()) {
 
-                                String desc = (r.getNome_receita() != null && !r.getNome_receita().isEmpty())
-                                        ? r.getNome_receita()
-                                        : "Receita";
 
-                                String data = (r.getData() != null) ? r.getData() : "--/--";
-
-                                listaUnificada.add(
-                                        new Dados(r.getId(), desc, r.getValor(), data, "RECEITA")
-                                );
-                            }
-                        }
-                        buscarDespesas();
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ReceitaModel>> call, Throwable t) {
-                        buscarDespesas();
-                    }
-                });
-    }
-
-    private void buscarDespesas() {
-
-        service.listarDespesa(API_KEY, "Bearer " + API_KEY)
-                .enqueue(new Callback<List<DespesaModel>>() {
-                    @Override
-                    public void onResponse(Call<List<DespesaModel>> call, Response<List<DespesaModel>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-
-                            for (DespesaModel d : response.body()) {
-
-                                String desc = (d.getNome_despesa() != null && !d.getNome_despesa().isEmpty())
-                                        ? d.getNome_despesa()
-                                        : "Despesa";
-
-                                String data = (d.getData() != null) ? d.getData() : "--/--";
-
-                                listaUnificada.add(
-                                        new Dados(d.getId(), desc, d.getValor(), data, "DESPESA")
-                                );
-                            }
-                        }
-                        atualizarInterface();
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<DespesaModel>> call, Throwable t) {
-                        atualizarInterface();
-                    }
-                });
-    }
 
     // --------------------------- INTERFACE ------------------------------
 
-    private void atualizarInterface() {
-        double receitaTotal = 0;
-        double despesaTotal = 0;
 
-        for (Dados d : listaUnificada) {
-            if ("RECEITA".equals(d.getTipo())) {
-                receitaTotal += d.getValor();
-            } else {
-                despesaTotal += d.getValor();
-            }
-        }
-
-        double saldo = receitaTotal - despesaTotal;
-
-        txtTotalReceitas.setText("+ R$ " + String.format("%.2f", receitaTotal));
-        txtTotalDespesas.setText("- R$ " + String.format("%.2f", despesaTotal));
-        txtSaldoTotal.setText("R$ " + String.format("%.2f", saldo));
-
-        MovimentacaoAdapter adapter = new MovimentacaoAdapter(listaUnificada);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-    }
 
     private void showDialogEscolha() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);

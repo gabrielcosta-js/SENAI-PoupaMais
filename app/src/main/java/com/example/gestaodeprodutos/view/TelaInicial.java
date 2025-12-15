@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
+import com.example.gestaodeprodutos.model.ReceitaModel;
 import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +38,12 @@ public class TelaInicial extends AppCompatActivity {
 
     private TextView txtSaudacao;
 
+    private TextView txtTotalDespesas;
+    private TextView txtTotalReceitas;
+
+    private double totalDespesas = 0.0;
+    private double totalReceitas = 0.0;
+
 
 
 
@@ -57,6 +64,10 @@ public class TelaInicial extends AppCompatActivity {
         txtMesAtual = findViewById(R.id.txt_mes_atual);
         ImageView btnAvancarMes = findViewById(R.id.btn_avancar_mes);
         ImageView btnVoltarMes = findViewById(R.id.btn_voltar_mes);
+
+        txtTotalDespesas = findViewById(R.id.txt_total_despesas);
+        txtTotalReceitas = findViewById(R.id.txt_total_receitas);
+
 
         fabAdd.setOnClickListener(v -> {
              showDialogEscolha();
@@ -94,16 +105,41 @@ public class TelaInicial extends AppCompatActivity {
                 .getString("TOKEN", "");
 
 
-// Observar resultado
+// Observar resultado desepsas
         dadosViewModel.getDespesa().observe(this, lista -> {
 
             if (lista == null || lista.isEmpty()) {
-                Toast.makeText(this, "Nenhuma despesa registrada", Toast.LENGTH_SHORT).show();
+                totalDespesas = 0;
+                txtTotalDespesas.setText("R$ 0,00");
                 despesaAdapter.atualizarLista(new ArrayList<>());
                 return;
             }
 
             despesaAdapter.atualizarLista(lista);
+
+            totalDespesas = 0;
+            for (DespesaModel d : lista) {
+                totalDespesas += Math.abs(d.getValor());
+            }
+
+            atualizarSaldos();
+        });
+
+    // Observar resultados receitas
+        dadosViewModel.getReceita().observe(this, lista -> {
+
+            if (lista == null || lista.isEmpty()) {
+                totalReceitas = 0;
+                txtTotalReceitas.setText("R$ 0,00");
+                return;
+            }
+
+            totalReceitas = 0;
+            for (ReceitaModel r : lista) {
+                totalReceitas += r.getValor();
+            }
+
+            atualizarSaldos();
         });
 
         txtSaudacao = findViewById(R.id.txt_saudacao);
@@ -118,20 +154,16 @@ public class TelaInicial extends AppCompatActivity {
 
     }
 
-    private void atualizarSaldos(double receita, double despesas) {
-        TextView txtReceitaValor = findViewById(R.id.txt_total_receitas);
-        TextView txtDespesasValor = findViewById(R.id.txt_total_despesas);
+    private void atualizarSaldos() {
+        txtTotalReceitas.setText(
+                "R$ " + String.format(Locale.getDefault(), "%.2f", totalReceitas)
+        );
 
-
-        if (txtReceitaValor != null) {
-            txtReceitaValor.setText("R$ " + String.format(Locale.getDefault(), "%.2f", receita));
-        }
-
-        if (txtDespesasValor != null) {
-            txtDespesasValor.setText("R$ " + String.format(Locale.getDefault(), "%.2f", despesas));
-        }
-
+        txtTotalDespesas.setText(
+                "R$ " + String.format(Locale.getDefault(), "%.2f", totalDespesas)
+        );
     }
+
 
     /**
      * Altera o mês exibido e recarrega os dados da lista
@@ -182,7 +214,8 @@ public class TelaInicial extends AppCompatActivity {
                 .getString("TOKEN", "");
 
         dadosViewModel.carregarDespesa(token);
-
+        dadosViewModel.carregarReceita(token);
     }
+
 
 }
