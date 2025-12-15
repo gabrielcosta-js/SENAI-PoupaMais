@@ -31,7 +31,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="412dp"
                 android:layout_height="66dp"
-                android:background="@color/verde_principal"
+                android:background="@drawable/toolbar_background"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -245,9 +245,10 @@
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
                             android:text="Todos"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                         <!-- Mercado -->
                         <com.google.android.material.button.MaterialButton
@@ -257,9 +258,10 @@
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
                             android:text="Mercado"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                         <!-- Alimentação -->
                         <com.google.android.material.button.MaterialButton
@@ -269,9 +271,10 @@
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
                             android:text="Alimentação"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                         <!-- Transporte -->
                         <com.google.android.material.button.MaterialButton
@@ -281,9 +284,10 @@
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
                             android:text="Transporte"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                         <!-- Moradia -->
                         <com.google.android.material.button.MaterialButton
@@ -293,9 +297,10 @@
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
                             android:text="Moradia"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                         <!-- Saúde -->
                         <com.google.android.material.button.MaterialButton
@@ -305,9 +310,10 @@
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
                             android:text="Saúde"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                         <!-- Lazer -->
                         <com.google.android.material.button.MaterialButton
@@ -317,9 +323,10 @@
                             android:layout_height="48dp"
                             android:layout_marginEnd="8dp"
                             android:text="Lazer"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                         <!-- Outros -->
                         <com.google.android.material.button.MaterialButton
@@ -328,9 +335,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="48dp"
                             android:text="Outros"
+                            android:textColor="@color/black"
                             app:cornerRadius="20dp"
                             app:strokeColor="@color/verde_principal"
-                            app:strokeWidth="1dp"/>
+                            app:strokeWidth="2dp"/>
 
                     </LinearLayout>
                 </HorizontalScrollView>
