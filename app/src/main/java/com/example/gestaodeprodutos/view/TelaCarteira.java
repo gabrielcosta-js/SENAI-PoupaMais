@@ -99,6 +99,8 @@ public class TelaCarteira extends AppCompatActivity {
 
     private void observarDados() {
 
+
+// Ultimas receitas
         dadosViewModel.getReceita().observe(this, receitas -> {
 
             if (receitas == null || receitas.isEmpty()) {
@@ -120,6 +122,7 @@ public class TelaCarteira extends AppCompatActivity {
             atualizarSaldo();
         });
 
+        // Ultimas despesas
         dadosViewModel.getDespesa().observe(this, despesas -> {
 
             if (despesas == null || despesas.isEmpty()) {

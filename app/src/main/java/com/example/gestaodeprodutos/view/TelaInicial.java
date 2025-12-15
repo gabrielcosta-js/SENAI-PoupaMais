@@ -122,6 +122,18 @@ public class TelaInicial extends AppCompatActivity {
     /* Puxar dados do bd*/
     private void observarDados() {
 
+// Observar resultado das 5 últimas desepsas
+        dadosViewModel.getUltimas5Despesas().observe(this, lista -> {
+
+            if (lista == null || lista.isEmpty()) {
+                totalDespesas = 0;
+                txtTotalDespesas.setText("R$ 0,00");
+                despesaAdapter.atualizarLista(new ArrayList<>());
+                return;
+            }
+
+            despesaAdapter.atualizarLista(lista);
+
         dadosViewModel.getDespesa().observe(this, lista -> {
             listaDespesas = lista != null ? lista : new ArrayList<>();
             totalDespesas = 0;
@@ -135,6 +147,16 @@ public class TelaInicial extends AppCompatActivity {
             selecionarCategoria(categoriaSelecionada);
         });
 
+
+        // Observar resultados das 5 últimas receitas
+        dadosViewModel.getUltimas5Receitas().observe(this, lista -> {
+
+            if (lista == null || lista.isEmpty()) {
+                totalReceitas = 0;
+                txtTotalReceitas.setText("R$ 0,00");
+                return;
+            }
+
         dadosViewModel.getReceita().observe(this, lista -> {
             totalReceitas = 0;
             if (lista != null) {
@@ -146,6 +168,8 @@ public class TelaInicial extends AppCompatActivity {
         });
     }
 
+
+        txtSaudacao = findViewById(R.id.txt_saudacao);
     private void atualizarSaldos() {
         txtTotalReceitas.setText("R$ " +
                 String.format(Locale.getDefault(), "%.2f", totalReceitas));
@@ -167,6 +191,26 @@ public class TelaInicial extends AppCompatActivity {
     private void mostrarGraficoTodos() {
         pieChart.setVisibility(View.VISIBLE);
         barChart.setVisibility(View.GONE);
+
+        despesaAdapter = new DespesaAdapter(new ArrayList<>(), despesa -> {
+
+            Intent intent = new Intent(
+                    TelaInicial.this,
+                    TelaAlterarDespesa.class
+            );
+
+            intent.putExtra("ID", despesa.getId());
+            intent.putExtra("VALOR", despesa.getValor());
+            intent.putExtra("CATEGORIA", despesa.getCategoria());
+            intent.putExtra("DATA", despesa.getData());
+            intent.putExtra("DESCRICAO", despesa.getDescricao());
+            intent.putExtra("FORMA_PAGAMENTO", despesa.getForma_pagamento());
+
+            startActivity(intent);
+        });
+
+        recyclerViewDespesas.setAdapter(despesaAdapter);
+
 
         Map<String, Float> somaCategoria = new HashMap<>();
 
