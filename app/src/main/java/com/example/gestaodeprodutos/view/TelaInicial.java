@@ -49,6 +49,7 @@ public class TelaInicial extends AppCompatActivity {
 
         calendarioAtual = Calendar.getInstance();
 
+
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         LinearLayout btnHome = findViewById(R.id.btn_home);
         LinearLayout btnWallet = findViewById(R.id.btn_wallet);

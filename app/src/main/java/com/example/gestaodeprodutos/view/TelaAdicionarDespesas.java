@@ -40,11 +40,13 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
         setupCategoryClicks();   // <<< CONFIGURAR CATEGORIAS AQUI
         setupDatePicker();
 
-        btnVoltar.setOnClickListener(v -> finish());
+        btnVoltar.setOnClickListener(v -> {
+            finish();
+        });
 
-        btnAnexar.setOnClickListener(v ->
-                Toast.makeText(this, "Abrir galeria...", Toast.LENGTH_SHORT).show()
-        );
+        btnAnexar.setOnClickListener(v -> {
+            Toast.makeText(this, "Abrir galeria...", Toast.LENGTH_SHORT).show();
+        });
 
         btnSalvar.setOnClickListener(v -> {
 
