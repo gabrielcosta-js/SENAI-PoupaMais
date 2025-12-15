@@ -38,9 +38,13 @@ public class TelaAdicionarReceita extends AppCompatActivity {
         setupCategoryClicks();   // 🔥 MESMO PADRÃO DA DESPESA
         setupDatePicker();
 
-        btnVoltar.setOnClickListener(v -> finish());
+        btnVoltar.setOnClickListener(v -> {
+            finish();
+        });
 
-        btnSalvar.setOnClickListener(v -> salvarReceita());
+        btnSalvar.setOnClickListener(v -> {
+            salvarReceita();
+        });
     }
 
     private void initViews() {

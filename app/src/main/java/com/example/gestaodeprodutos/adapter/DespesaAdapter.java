@@ -43,13 +43,9 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
 
         String valorFormatado = String.format(Locale.getDefault(), "R$ %.2f", Math.abs(despesa.getValor()));
 
-        if (despesa.getValor() < 0) {
+
             holder.txtValorDespesa.setText("- " + valorFormatado);
             holder.txtValorDespesa.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.holo_red_dark));
-        } else {
-            holder.txtValorDespesa.setText("+ " + valorFormatado);
-            holder.txtValorDespesa.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.black));
-        }
 
         defineIconePorCategoria(despesa.getCategoria(), holder.imgIconeDespesa);
     }

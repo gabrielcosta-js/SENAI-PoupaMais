@@ -3,6 +3,7 @@ package com.example.gestaodeprodutos.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,19 +11,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestaodeprodutos.R;
+import com.example.gestaodeprodutos.adapter.DespesaAdapter;
 import com.example.gestaodeprodutos.adapter.MovimentacaoAdapter;
 import com.example.gestaodeprodutos.adapter.ReceitaAdapter;
 import com.example.gestaodeprodutos.model.DespesaModel;
 import com.example.gestaodeprodutos.model.Dados;
 import com.example.gestaodeprodutos.model.ReceitaModel;
-import com.example.gestaodeprodutos.network.RetrofitClient_professor;
 import com.example.gestaodeprodutos.network.SupabaseService;
+import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +37,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TelaCarteira extends AppCompatActivity {
+
+    private DadosViewModel dadosViewModel;
+
+    private RecyclerView recyclerEntradas;
+    private RecyclerView recyclerSaidas;
+
+    private ReceitaAdapter receitaAdapter;
+    private DespesaAdapter despesaAdapter;
 
     private RecyclerView recyclerView;
     private TextView txtSaldoTotal, txtTotalReceitas, txtTotalDespesas;
@@ -52,17 +65,64 @@ public class TelaCarteira extends AppCompatActivity {
         setContentView(R.layout.activity_tela_carteira);
 
         initViews();
-        setupNavigation();
 
-        service = RetrofitClient_professor.getRetrofitInstance().create(SupabaseService.class);
+        recyclerEntradas = findViewById(R.id.recycler_movimentosEntradas);
+        recyclerSaidas = findViewById(R.id.recycler_movimentosSaidas);
 
-        carregarDadosDoSupabase();
+        recyclerEntradas.setLayoutManager(new LinearLayoutManager(this));
+        recyclerSaidas.setLayoutManager(new LinearLayoutManager(this));
 
-        fabAdd.setOnClickListener(v -> showDialogEscolha());
+        receitaAdapter = new ReceitaAdapter(new ArrayList<>());
+        despesaAdapter = new DespesaAdapter(new ArrayList<>());
+
+        recyclerEntradas.setAdapter(receitaAdapter);
+        recyclerSaidas.setAdapter(despesaAdapter);
+
+        dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+        dadosViewModel.init(this); // 🔴 ESSENCIAL
+
+        observarDados();
+
+        fabAdd.setOnClickListener(v -> {
+            showDialogEscolha();
+        });
+
+        btnHome.setOnClickListener(v -> {
+            finish();
+        });
+
     }
 
+    private void observarDados() {
+
+        dadosViewModel.getReceita().observe(this, receitas -> {
+            if (receitas != null) {
+                receitaAdapter.atualizarLista(receitas);
+            }
+        });
+
+        dadosViewModel.getDespesa().observe(this, despesas -> {
+            if (despesas != null) {
+                despesaAdapter.atualizarLista(despesas);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String token = getSharedPreferences("APP", MODE_PRIVATE)
+                .getString("TOKEN", "");
+
+        dadosViewModel.carregarReceita(token);
+        dadosViewModel.carregarDespesa(token);
+    }
+
+
+
     private void initViews() {
-        recyclerView = findViewById(R.id.recycler_movimentos);
+        recyclerView = findViewById(R.id.recycler_movimentosEntradas);
         txtSaldoTotal = findViewById(R.id.txt_saldo_total);
         txtTotalReceitas = findViewById(R.id.txt_total_receitas);
         txtTotalDespesas = findViewById(R.id.txt_total_despesas);

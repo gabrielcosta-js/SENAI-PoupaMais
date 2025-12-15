@@ -107,26 +107,52 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/lbl_movimentacoes"
+        android:id="@+id/lbl_movimentacoesEntradas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="24dp"
-        android:text="Movimentações"
+        android:layout_marginTop="24dp"
+        android:text="Entradas (Receitas)"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_saldo" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_movimentos"
+        android:id="@+id/recycler_movimentosEntradas"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav_background"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_movimentacoes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/lbl_movimentacoesEntradas"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/lbl_movimentacoesSaidas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Saídas (Despesas)"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_movimentosEntradas" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_movimentosSaidas"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_movimentacoesSaidas"
+        app:layout_constraintVertical_bias="0.0" />
+
+<!--    Botão de NAV-->
     <View
         android:id="@+id/bottom_nav_background"
         android:layout_width="match_parent"
