@@ -85,6 +85,13 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtAlterarNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome" android:padding="15dp"
+        android:inputType="text"  android:maxLines="1"
+        android:background="@android:color/transparent"
+        />
             android:id="@+id/edtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +109,25 @@
         app:startIconDrawable="@drawable/ic_category"
         app:startIconTint="#777777"
         app:boxBackgroundMode="filled"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="none"
+
+        android:background="@drawable/bg_edittext_email">
+
+        <AutoCompleteTextView
+            android:id="@+id/edtAlterarCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Categoria"
+            android:padding="15dp"
+
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+
+            android:maxLines="1"
+            android:background="@android:color/transparent"/>
+
         app:boxCornerRadiusTopStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -120,6 +146,8 @@
             android:background="@android:color/transparent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutData"
         android:layout_width="0dp"
@@ -134,14 +162,29 @@
         app:boxCornerRadiusBottomStart="16dp"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxStrokeWidth="0dp"
+        app:endIconMode="none"
+
+        android:focusable="false"
+        android:clickable="true"
+        >
         app:layout_constraintTop_toBottomOf="@id/layoutCategoria"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtData"
+            android:id="@+id/edtAlterarData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="dd/mm/aaaa"
+            android:padding="15dp"
+
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+
+            android:maxLines="1"
+            android:background="@android:color/transparent"/>
+
             android:hint="Data"
             android:padding="16dp"
             android:background="@android:color/transparent"/>
@@ -156,6 +199,9 @@
         app:startIconDrawable="@drawable/ic_card"
         app:startIconTint="#777777"
         app:boxBackgroundMode="filled"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="none"
+        android:background="@drawable/bg_edittext_email">
         app:boxCornerRadiusTopStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -165,14 +211,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtFormapagamento"
+        <AutoCompleteTextView
+            android:id="@+id/edtAlterarFormaPagamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Forma de Pagamento"
+            android:padding="15dp"
+
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+
+            android:maxLines="1"
+            android:background="@android:color/transparent" />
+
             android:padding="16dp"
             android:background="@android:color/transparent"/>
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutDescricao"
@@ -191,7 +247,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDescricao"
+            android:id="@+id/edtAlterarDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Descrição"

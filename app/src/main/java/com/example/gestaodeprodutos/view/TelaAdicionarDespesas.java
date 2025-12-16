@@ -107,6 +107,12 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
         edt_Descricao = findViewById(R.id.edt_Descricao);  // CORRETO
         edt_FormaPagamento = findViewById(R.id.edt_FormaPagamento);
 
+        // Bloquear digitação manual da forma de pagamento
+        edt_FormaPagamento.setKeyListener(null);
+        edt_FormaPagamento.setFocusable(false);
+        edt_FormaPagamento.setCursorVisible(false);
+
+
         btnAnexar = findViewById(R.id.btn_anexar);
         btnSalvar = findViewById(R.id.btn_salvar);
 
@@ -123,7 +129,23 @@ public class TelaAdicionarDespesas extends AppCompatActivity {
             Intent intent = new Intent(this, TelaInicial.class);
             startActivity(intent);
         });
+
+        edt_FormaPagamento.setOnClickListener(v -> {
+            mostrarDialogFormaPagamento();
+        });
+
     }
+    private void mostrarDialogFormaPagamento() {
+        String[] opcoes = {"Pix", "Cartão", "Débito", "Dinheiro"};
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Forma de pagamento")
+                .setItems(opcoes, (dialog, which) -> {
+                    edt_FormaPagamento.setText(opcoes[which]);
+                })
+                .show();
+    }
+
 
 
     private void setupDatePicker() {
