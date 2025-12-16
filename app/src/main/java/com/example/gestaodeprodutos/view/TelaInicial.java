@@ -54,7 +54,6 @@ public class TelaInicial extends AppCompatActivity {
     private List<DespesaModel> listaDespesas = new ArrayList<>();
 
     private CategoriaFiltro categoriaSelecionada = CategoriaFiltro.TODOS;
-
     private final Map<String, Integer> coresCategoria = new HashMap<>();
 
     @Override
@@ -64,6 +63,19 @@ public class TelaInicial extends AppCompatActivity {
 
         inicializarCores();
         inicializarViews();
+
+        // ✅ Adapter criado UMA ÚNICA VEZ
+        despesaAdapter = new DespesaAdapter(new ArrayList<>(), despesa -> {
+            Intent intent = new Intent(this, TelaAlterarDespesa.class);
+            intent.putExtra("ID", despesa.getId());
+            intent.putExtra("VALOR", despesa.getValor());
+            intent.putExtra("CATEGORIA", despesa.getCategoria());
+            intent.putExtra("DATA", despesa.getData());
+            intent.putExtra("DESCRICAO", despesa.getDescricao());
+            intent.putExtra("FORMA_PAGAMENTO", despesa.getForma_pagamento());
+            startActivity(intent);
+        });
+
         configurarRecycler();
         configurarBotoesCategoria();
 
@@ -84,7 +96,8 @@ public class TelaInicial extends AppCompatActivity {
         txtSaudacao.setText("Olá, " + prefs.getString("nome", "Usuário"));
     }
 
-    /*INICIALIZAÇÕES*/
+    /* ---------------- INICIALIZAÇÕES ---------------- */
+
     private void inicializarViews() {
         txtSaudacao = findViewById(R.id.txt_saudacao);
         txtTotalDespesas = findViewById(R.id.txt_total_despesas);
@@ -96,7 +109,6 @@ public class TelaInicial extends AppCompatActivity {
     private void configurarRecycler() {
         recyclerViewDespesas = findViewById(R.id.recycler_despesas_recentes);
         recyclerViewDespesas.setLayoutManager(new LinearLayoutManager(this));
-        despesaAdapter = new DespesaAdapter(new ArrayList<>());
         recyclerViewDespesas.setAdapter(despesaAdapter);
     }
 
@@ -119,44 +131,31 @@ public class TelaInicial extends AppCompatActivity {
                 .setOnClickListener(v -> selecionarCategoria(CategoriaFiltro.OUTROS));
     }
 
-    /* Puxar dados do bd*/
+    /* ---------------- OBSERVERS ---------------- */
+
     private void observarDados() {
 
-// Observar resultado das 5 últimas desepsas
+        // 🔹 5 últimas despesas (Recycler)
         dadosViewModel.getUltimas5Despesas().observe(this, lista -> {
+            despesaAdapter.atualizarLista(
+                    lista != null ? lista : new ArrayList<>()
+            );
+        });
 
-            if (lista == null || lista.isEmpty()) {
-                totalDespesas = 0;
-                txtTotalDespesas.setText("R$ 0,00");
-                despesaAdapter.atualizarLista(new ArrayList<>());
-                return;
-            }
-
-            despesaAdapter.atualizarLista(lista);
-
+        // 🔹 Todas as despesas (totais + gráficos)
         dadosViewModel.getDespesa().observe(this, lista -> {
             listaDespesas = lista != null ? lista : new ArrayList<>();
-            totalDespesas = 0;
 
+            totalDespesas = 0;
             for (DespesaModel d : listaDespesas) {
                 totalDespesas += Math.abs(d.getValor());
             }
 
-            despesaAdapter.atualizarLista(listaDespesas);
             atualizarSaldos();
             selecionarCategoria(categoriaSelecionada);
         });
 
-
-        // Observar resultados das 5 últimas receitas
-        dadosViewModel.getUltimas5Receitas().observe(this, lista -> {
-
-            if (lista == null || lista.isEmpty()) {
-                totalReceitas = 0;
-                txtTotalReceitas.setText("R$ 0,00");
-                return;
-            }
-
+        // 🔹 Receitas (total)
         dadosViewModel.getReceita().observe(this, lista -> {
             totalReceitas = 0;
             if (lista != null) {
@@ -168,8 +167,6 @@ public class TelaInicial extends AppCompatActivity {
         });
     }
 
-
-        txtSaudacao = findViewById(R.id.txt_saudacao);
     private void atualizarSaldos() {
         txtTotalReceitas.setText("R$ " +
                 String.format(Locale.getDefault(), "%.2f", totalReceitas));
@@ -177,7 +174,8 @@ public class TelaInicial extends AppCompatActivity {
                 String.format(Locale.getDefault(), "%.2f", totalDespesas));
     }
 
-    /*CONTROLE DE GRÁFICOS*/
+    /* ---------------- GRÁFICOS ---------------- */
+
     private void selecionarCategoria(CategoriaFiltro categoria) {
         categoriaSelecionada = categoria;
 
@@ -191,26 +189,6 @@ public class TelaInicial extends AppCompatActivity {
     private void mostrarGraficoTodos() {
         pieChart.setVisibility(View.VISIBLE);
         barChart.setVisibility(View.GONE);
-
-        despesaAdapter = new DespesaAdapter(new ArrayList<>(), despesa -> {
-
-            Intent intent = new Intent(
-                    TelaInicial.this,
-                    TelaAlterarDespesa.class
-            );
-
-            intent.putExtra("ID", despesa.getId());
-            intent.putExtra("VALOR", despesa.getValor());
-            intent.putExtra("CATEGORIA", despesa.getCategoria());
-            intent.putExtra("DATA", despesa.getData());
-            intent.putExtra("DESCRICAO", despesa.getDescricao());
-            intent.putExtra("FORMA_PAGAMENTO", despesa.getForma_pagamento());
-
-            startActivity(intent);
-        });
-
-        recyclerViewDespesas.setAdapter(despesaAdapter);
-
 
         Map<String, Float> somaCategoria = new HashMap<>();
 
@@ -271,7 +249,8 @@ public class TelaInicial extends AppCompatActivity {
         barChart.invalidate();
     }
 
-    /*CORES */
+    /* ---------------- CORES ---------------- */
+
     private void inicializarCores() {
         coresCategoria.put("Mercado", Color.parseColor("#4CAF50"));
         coresCategoria.put("Alimentação", Color.parseColor("#FF9800"));
@@ -282,7 +261,8 @@ public class TelaInicial extends AppCompatActivity {
         coresCategoria.put("Outros", Color.parseColor("#9E9E9E"));
     }
 
-    /* DIALOG */
+    /* ---------------- DIALOG ---------------- */
+
     private void showDialogEscolha() {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         View view = getLayoutInflater().inflate(R.layout.dialog_escolha, null);

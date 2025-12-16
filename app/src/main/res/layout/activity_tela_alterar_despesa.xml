@@ -7,4 +7,249 @@
     android:layout_height="match_parent"
     tools:context=".view.TelaAlterarDespesa">
 
+
+        <ImageView
+            android:id="@+id/btn_voltar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#000000" />
+
+    <TextView
+        android:id="@+id/txtDetalhesDespesa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detalhes da Despesa"
+        android:textSize="21sp"
+        android:textColor="@color/black"
+
+        app:layout_constraintTop_toBottomOf="@+id/btn_voltar"
+        app:layout_constraintStart_toStartOf="parent"
+
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+
+        ></TextView>
+
+    <TextView
+        android:id="@+id/txtValor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Valor"
+
+        app:layout_constraintTop_toBottomOf="@+id/txtDetalhesDespesa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        android:layout_marginTop="50dp"
+        ></TextView>
+
+    <TextView
+        android:id="@+id/txtValorDespesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="45sp"
+        android:hint="R$ 0,00"
+        android:textColor="@color/red"
+        android:textColorHint="@color/red"
+
+        app:layout_constraintTop_toBottomOf="@+id/txtValor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        ></TextView>
+
+    <View
+        android:id="@+id/separator_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+
+        android:layout_marginTop="40dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/txtValorDespesa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="40dp"
+
+        app:layout_constraintTop_toBottomOf="@id/separator_line"
+        app:boxBackgroundMode="filled"
+        android:background="@drawable/bg_edittext_email"
+        android:textColor="#333333"
+        android:textColorHint="#666666"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome" android:padding="15dp"
+        android:inputType="text"  android:maxLines="1"
+        android:background="@android:color/transparent"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+
+        app:layout_constraintTop_toBottomOf="@id/layoutNome"
+        app:boxBackgroundMode="filled"
+        android:background="@drawable/bg_edittext_email"
+        android:textColor="#333333"
+        android:textColorHint="#666666"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="none">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Categoria" android:padding="15dp"
+        android:inputType="text"  android:maxLines="1"
+        android:background="@android:color/transparent"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+
+        app:layout_constraintTop_toBottomOf="@id/layoutCategoria"
+        app:boxBackgroundMode="filled"
+        android:background="@drawable/bg_edittext_email"
+        android:textColor="#333333"
+        android:textColorHint="#666666"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data" android:padding="15dp"
+            android:inputType="text"  android:maxLines="1"
+            android:background="@android:color/transparent"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutFormaPagamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+
+        app:layout_constraintTop_toBottomOf="@id/layoutData"
+        app:boxBackgroundMode="filled"
+        android:background="@drawable/bg_edittext_email"
+        android:textColor="#333333"
+        android:textColorHint="#666666"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtFormapagamento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Forma Pagamento" android:padding="15dp"
+            android:inputType="text"  android:maxLines="1"
+            android:background="@android:color/transparent"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutDescricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="40dp"
+
+        app:layout_constraintTop_toBottomOf="@id/layoutFormaPagamento"
+        app:boxBackgroundMode="filled"
+        android:background="@drawable/bg_edittext_email"
+        android:textColor="#333333"
+        android:textColorHint="#666666"
+        app:boxStrokeWidth="0dp"
+        app:endIconMode="none">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtDescricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descrição" android:padding="15dp"
+            android:inputType="text"  android:maxLines="1"
+            android:background="@android:color/transparent"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnAlterarDespesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:backgroundTint="@color/black"
+
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="75dp"
+        android:text="Alterar Despesa"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+
+        android:layout_marginTop="40dp"
+
+        android:background="@drawable/bg_edittext_email"
+
+        app:layout_constraintTop_toBottomOf="@id/layoutDescricao"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"      />
+
+    <Button
+        android:id="@+id/btnApagarDespesa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="75dp"
+        android:text="Excluir Despesa"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+
+        android:textColor="#FF3333"
+        android:backgroundTint="#FFF0F0"
+
+        android:background="@drawable/bg_edittext_email"
+
+        app:layout_constraintTop_toBottomOf="@id/btnAlterarDespesa"
+        android:layout_marginTop="8dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"      />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

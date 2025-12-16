@@ -77,7 +77,8 @@ public class TelaCarteira extends AppCompatActivity {
         recyclerSaidas.setLayoutManager(new LinearLayoutManager(this));
 
         receitaAdapter = new ReceitaAdapter(new ArrayList<>());
-        despesaAdapter = new DespesaAdapter(new ArrayList<>());
+        despesaAdapter = new DespesaAdapter(new ArrayList<>(), null);
+
 
         recyclerEntradas.setAdapter(receitaAdapter);
         recyclerSaidas.setAdapter(despesaAdapter);
