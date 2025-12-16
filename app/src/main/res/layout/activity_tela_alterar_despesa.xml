@@ -94,7 +94,7 @@
         app:endIconMode="none">
 
         <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edtNome"
+        android:id="@+id/edtAlterarNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nome" android:padding="15dp"
@@ -112,21 +112,28 @@
 
         app:layout_constraintTop_toBottomOf="@id/layoutNome"
         app:boxBackgroundMode="filled"
-        android:background="@drawable/bg_edittext_email"
-        android:textColor="#333333"
-        android:textColorHint="#666666"
         app:boxStrokeWidth="0dp"
-        app:endIconMode="none">
+        app:endIconMode="none"
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edtCategoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Categoria" android:padding="15dp"
-        android:inputType="text"  android:maxLines="1"
-        android:background="@android:color/transparent"
-        />
+        android:background="@drawable/bg_edittext_email">
+
+        <AutoCompleteTextView
+            android:id="@+id/edtAlterarCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Categoria"
+            android:padding="15dp"
+
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+
+            android:maxLines="1"
+            android:background="@android:color/transparent"/>
+
     </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutData"
@@ -141,16 +148,26 @@
         android:textColor="#333333"
         android:textColorHint="#666666"
         app:boxStrokeWidth="0dp"
-        app:endIconMode="none">
+        app:endIconMode="none"
+
+        android:focusable="false"
+        android:clickable="true"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtData"
+            android:id="@+id/edtAlterarData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Data" android:padding="15dp"
-            android:inputType="text"  android:maxLines="1"
-            android:background="@android:color/transparent"
-            />
+            android:hint="dd/mm/aaaa"
+            android:padding="15dp"
+
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+
+            android:maxLines="1"
+            android:background="@android:color/transparent"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -162,21 +179,26 @@
 
         app:layout_constraintTop_toBottomOf="@id/layoutData"
         app:boxBackgroundMode="filled"
-        android:background="@drawable/bg_edittext_email"
-        android:textColor="#333333"
-        android:textColorHint="#666666"
         app:boxStrokeWidth="0dp"
-        app:endIconMode="none">
+        app:endIconMode="none"
+        android:background="@drawable/bg_edittext_email">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtFormapagamento"
+        <AutoCompleteTextView
+            android:id="@+id/edtAlterarFormaPagamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Forma Pagamento" android:padding="15dp"
-            android:inputType="text"  android:maxLines="1"
-            android:background="@android:color/transparent"
-            />
+            android:hint="Forma de Pagamento"
+            android:padding="15dp"
+
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+
+            android:maxLines="1"
+            android:background="@android:color/transparent" />
+
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutDescricao"
@@ -194,7 +216,7 @@
         app:endIconMode="none">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtDescricao"
+            android:id="@+id/edtAlterarDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Descrição" android:padding="15dp"
