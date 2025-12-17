@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace 'com.example.gestaodeprodutos'
+    namespace 'com.example.poupamais'
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId "com.example.gestaodeprodutos"
+        applicationId "com.example.poupamais"
         minSdk 24
         targetSdk 36
         versionCode 1
