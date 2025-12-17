@@ -49,7 +49,7 @@ public class ReceitaAdapter extends RecyclerView.Adapter<ReceitaAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ReceitaModel item = listaDados.get(position);
 
-        holder.textDescricao.setText(item.getDescricao());
+        holder.textDescricao.setText(item.getNome_receita());
         holder.textData.setText(item.getData());
 
         // Receita sempre positiva (verde)
