@@ -76,8 +76,17 @@ public class TelaCarteira extends AppCompatActivity {
         recyclerEntradas.setLayoutManager(new LinearLayoutManager(this));
         recyclerSaidas.setLayoutManager(new LinearLayoutManager(this));
 
-        receitaAdapter = new ReceitaAdapter(new ArrayList<>());
-        despesaAdapter = new DespesaAdapter(new ArrayList<>(), null);
+        receitaAdapter = new ReceitaAdapter(new ArrayList<>(), receita -> {
+            Intent intent = new Intent(TelaCarteira.this, TelaAlterarReceita.class);
+            intent.putExtra("RECEITA", receita);
+            startActivity(intent);
+        });
+        despesaAdapter = new DespesaAdapter(new ArrayList<>(), despesa -> {
+            Intent intent = new Intent(TelaCarteira.this, TelaAlterarDespesa.class);
+            intent.putExtra("DESPESA", despesa);
+            startActivity(intent);
+        });
+
 
 
         recyclerEntradas.setAdapter(receitaAdapter);

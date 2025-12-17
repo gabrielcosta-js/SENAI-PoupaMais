@@ -64,17 +64,12 @@ public class TelaInicial extends AppCompatActivity {
         inicializarCores();
         inicializarViews();
 
-        // ✅ Adapter criado UMA ÚNICA VEZ
         despesaAdapter = new DespesaAdapter(new ArrayList<>(), despesa -> {
             Intent intent = new Intent(this, TelaAlterarDespesa.class);
-            intent.putExtra("ID", despesa.getId());
-            intent.putExtra("VALOR", despesa.getValor());
-            intent.putExtra("CATEGORIA", despesa.getCategoria());
-            intent.putExtra("DATA", despesa.getData());
-            intent.putExtra("DESCRICAO", despesa.getDescricao());
-            intent.putExtra("FORMA_PAGAMENTO", despesa.getForma_pagamento());
+            intent.putExtra("DESPESA", despesa); // 🔥 ISSO É O MAIS IMPORTANTE
             startActivity(intent);
         });
+
 
         configurarRecycler();
         configurarBotoesCategoria();

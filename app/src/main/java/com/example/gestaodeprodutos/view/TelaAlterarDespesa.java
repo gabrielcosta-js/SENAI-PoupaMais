@@ -29,7 +29,7 @@ public class TelaAlterarDespesa extends AppCompatActivity {
     private AutoCompleteTextView edtFormaPagamento;
 
     private EditText edtDescricao;
-    private TextView txtValorDespesa;
+    private EditText txtValorDespesa;
 
     private Button btnAlterarDespesa;
     private Button btnApagarDespesa;
@@ -153,27 +153,45 @@ public class TelaAlterarDespesa extends AppCompatActivity {
     private void carregarDespesa() {
         despesa = (DespesaModel) getIntent().getSerializableExtra("DESPESA");
 
-        if (despesa == null) return;
+        if (despesa == null) {
+            finish();
+            return;
+        }
 
         edtNome.setText(despesa.getNome_despesa());
         edtCategoria.setText(despesa.getCategoria(), false);
         edtData.setText(despesa.getData());
         edtDescricao.setText(despesa.getDescricao());
         edtFormaPagamento.setText(despesa.getForma_pagamento(), false);
-        txtValorDespesa.setText("R$ " + despesa.getValor());
+        txtValorDespesa.setText(String.valueOf(despesa.getValor()));
     }
+
 
     // =========================
     // 🔹 BOTÕES
     // =========================
     private void configurarBotoes() {
 
-
-
         btnAlterarDespesa.setOnClickListener(v -> {
             if (despesa == null) return;
 
-            double valor = despesa.getValor();
+            String valorTexto = txtValorDespesa.getText().toString()
+                    .replace("R$", "")
+                    .replace(",", ".")
+                    .trim();
+
+            if (valorTexto.isEmpty()) {
+                txtValorDespesa.setError("Informe o valor");
+                return;
+            }
+
+            double valor;
+            try {
+                valor = Double.parseDouble(valorTexto);
+            } catch (NumberFormatException e) {
+                txtValorDespesa.setError("Valor inválido");
+                return;
+            }
 
             dadosViewModel.alterarDespesa(
                     despesa.getId(),
@@ -191,7 +209,6 @@ public class TelaAlterarDespesa extends AppCompatActivity {
             });
         });
 
-
         btnApagarDespesa.setOnClickListener(v -> {
             if (despesa == null) return;
 
@@ -204,9 +221,10 @@ public class TelaAlterarDespesa extends AppCompatActivity {
                 }
             });
         });
+    }
 
 
-        // =========================
+    // =========================
     // 🔹 FINDS
     // =========================
     private void inicializarViews() {
@@ -214,11 +232,12 @@ public class TelaAlterarDespesa extends AppCompatActivity {
         edtCategoria = findViewById(R.id.edtAlterarCategoria);
         edtData = findViewById(R.id.edtAlterarData);
         edtFormaPagamento = findViewById(R.id.edtAlterarFormaPagamento);
-        edtDescricao = findViewById(R.id.edtDescricao);
+        edtDescricao = findViewById(R.id.edtAlterarDescricao);
         txtValorDespesa = findViewById(R.id.txtValorDespesa);
 
         btnAlterarDespesa = findViewById(R.id.btnAlterarDespesa);
         btnApagarDespesa = findViewById(R.id.btnApagarDespesa);
         btn_voltar = findViewById(R.id.btn_voltar);
     }
+
 }

@@ -31,6 +31,17 @@ public class TelaLoginMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 🔐 VERIFICA SE JÁ ESTÁ LOGADO
+        SharedPreferences prefs = getSharedPreferences("APP", MODE_PRIVATE);
+        String token = prefs.getString("TOKEN", null);
+
+        if (token != null && !token.isEmpty()) {
+            // Usuário já logado → vai direto pra tela inicial
+            startActivity(new Intent(this, TelaInicial.class));
+            finish();
+            return;
+        }
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_login_main);
 
