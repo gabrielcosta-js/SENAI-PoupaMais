@@ -31,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,10 +64,27 @@ public class TelaCarteira extends AppCompatActivity {
 
     private final String API_KEY = "sb_secret_Eq6N9jRApVFcGFJ-HhbwXw_zJRaukhW";
 
+    private final Calendar mesAtual = Calendar.getInstance();
+
+    private List<ReceitaModel> todasReceitas = new ArrayList<>();
+    private List<DespesaModel> todasDespesas = new ArrayList<>();
+
+    private List<ReceitaModel> receitasDoMes = new ArrayList<>();
+    private List<DespesaModel> despesasDoMes = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_carteira);
+
+        // 🔥 RECEBER MÊS DA TELA INICIAL
+        int mes = getIntent().getIntExtra("MES", -1);
+        int ano = getIntent().getIntExtra("ANO", -1);
+
+        if (mes != -1 && ano != -1) {
+            mesAtual.set(Calendar.MONTH, mes);
+            mesAtual.set(Calendar.YEAR, ano);
+        }
 
         initViews();
 
@@ -76,8 +94,17 @@ public class TelaCarteira extends AppCompatActivity {
         recyclerEntradas.setLayoutManager(new LinearLayoutManager(this));
         recyclerSaidas.setLayoutManager(new LinearLayoutManager(this));
 
-        receitaAdapter = new ReceitaAdapter(new ArrayList<>());
-        despesaAdapter = new DespesaAdapter(new ArrayList<>(), null);
+        receitaAdapter = new ReceitaAdapter(new ArrayList<>(), receita -> {
+            Intent intent = new Intent(TelaCarteira.this, TelaAlterarReceita.class);
+            intent.putExtra("RECEITA", receita);
+            startActivity(intent);
+        });
+        despesaAdapter = new DespesaAdapter(new ArrayList<>(), despesa -> {
+            Intent intent = new Intent(TelaCarteira.this, TelaAlterarDespesa.class);
+            intent.putExtra("DESPESA", despesa);
+            startActivity(intent);
+        });
+
 
 
         recyclerEntradas.setAdapter(receitaAdapter);
@@ -100,51 +127,72 @@ public class TelaCarteira extends AppCompatActivity {
 
     private void observarDados() {
 
-
-// Ultimas receitas
-        dadosViewModel.getReceita().observe(this, receitas -> {
-
-            if (receitas == null || receitas.isEmpty()) {
-                totalReceitas = 0;
-                txtTotalReceitas.setText("+ R$ 0,00");
-            } else {
-                receitaAdapter.atualizarLista(receitas);
-
-                totalReceitas = 0;
-                for (ReceitaModel r : receitas) {
-                    totalReceitas += r.getValor();
-                }
-
-                txtTotalReceitas.setText(
-                        "+ R$ " + String.format("%.2f", totalReceitas)
-                );
-            }
-
-            atualizarSaldo();
+        dadosViewModel.getReceita().observe(this, lista -> {
+            todasReceitas = lista != null ? lista : new ArrayList<>();
+            aplicarFiltroReceita();
         });
 
-        // Ultimas despesas
-        dadosViewModel.getDespesa().observe(this, despesas -> {
-
-            if (despesas == null || despesas.isEmpty()) {
-                totalDespesas = 0;
-                txtTotalDespesas.setText("- R$ 0,00");
-            } else {
-                despesaAdapter.atualizarLista(despesas);
-
-                totalDespesas = 0;
-                for (DespesaModel d : despesas) {
-                    totalDespesas += Math.abs(d.getValor());
-                }
-
-                txtTotalDespesas.setText(
-                        "- R$ " + String.format("%.2f", totalDespesas)
-                );
-            }
-
-            atualizarSaldo();
+        dadosViewModel.getDespesa().observe(this, lista -> {
+            todasDespesas = lista != null ? lista : new ArrayList<>();
+            aplicarFiltroDespesa();
         });
     }
+    private void aplicarFiltroDespesa() {
+        despesasDoMes.clear();
+        totalDespesas = 0;
+
+        int mesSelecionado = mesAtual.get(Calendar.MONTH) + 1;
+        int anoSelecionado = mesAtual.get(Calendar.YEAR);
+
+        for (DespesaModel d : todasDespesas) {
+            if (d.getData() == null || d.getData().isEmpty()) continue;
+
+            String[] partes = d.getData().split("-");
+            if (partes.length < 3) continue;
+
+            int ano = Integer.parseInt(partes[0]);
+            int mes = Integer.parseInt(partes[1]);
+
+            if (mes == mesSelecionado && ano == anoSelecionado) {
+                despesasDoMes.add(d);
+                totalDespesas += Math.abs(d.getValor());
+            }
+        }
+
+        despesaAdapter.atualizarLista(despesasDoMes);
+        txtTotalDespesas.setText("- R$ " + String.format("%.2f", totalDespesas));
+
+        atualizarSaldo();
+    }
+
+    private void aplicarFiltroReceita() {
+        receitasDoMes.clear();
+        totalReceitas = 0;
+
+        int mesSelecionado = mesAtual.get(Calendar.MONTH) + 1;
+        int anoSelecionado = mesAtual.get(Calendar.YEAR);
+
+        for (ReceitaModel r : todasReceitas) {
+            if (r.getData() == null || r.getData().isEmpty()) continue;
+
+            String[] partes = r.getData().split("-");
+            if (partes.length < 3) continue;
+
+            int ano = Integer.parseInt(partes[0]);
+            int mes = Integer.parseInt(partes[1]);
+
+            if (mes == mesSelecionado && ano == anoSelecionado) {
+                receitasDoMes.add(r);
+                totalReceitas += r.getValor();
+            }
+        }
+
+        receitaAdapter.atualizarLista(receitasDoMes);
+        txtTotalReceitas.setText("+ R$ " + String.format("%.2f", totalReceitas));
+
+        atualizarSaldo();
+    }
+
 
     private void atualizarSaldo() {
         double saldo = totalReceitas - totalDespesas;

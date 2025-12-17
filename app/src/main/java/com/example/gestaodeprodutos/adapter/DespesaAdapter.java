@@ -49,7 +49,7 @@ public class DespesaAdapter extends RecyclerView.Adapter<DespesaAdapter.DespesaV
     public void onBindViewHolder(@NonNull DespesaViewHolder holder, int position) {
         DespesaModel despesa = listaDespesas.get(position);
 
-        holder.txtNomeDespesa.setText(despesa.getDescricao());
+        holder.txtNomeDespesa.setText(despesa.getNome_despesa());
         holder.txtCategoriaDespesa.setText(despesa.getCategoria());
 
         String valorFormatado = String.format(

@@ -1,141 +1,205 @@
 package com.example.gestaodeprodutos.view;
 
 import android.app.DatePickerDialog;
+import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gestaodeprodutos.R;
-
-import java.util.Calendar;
+import com.example.gestaodeprodutos.model.ReceitaModel;
+import com.example.gestaodeprodutos.viewmodel.DadosViewModel;
 
 public class TelaAlterarReceita extends AppCompatActivity {
+
+    private EditText edtNome;
+    private AutoCompleteTextView edtCategoria;
+    private EditText edtData;
+    private EditText edtDescricao;
+    private EditText txtValorReceita;
+
+    private Button btnAlterarReceita;
+    private Button btnApagarReceita;
+    private ImageView btn_voltar;
+
+    private DadosViewModel dadosViewModel;
+    private String token;
+
+    private ReceitaModel receita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_alterar_receita);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        inicializarViews();
+
+        dadosViewModel = new ViewModelProvider(this).get(DadosViewModel.class);
+        dadosViewModel.init(this);
+
+        token = getSharedPreferences("APP", MODE_PRIVATE)
+                .getString("TOKEN", "");
+
+        setupCategoriaDropdown();
+        setupDatePicker();
+        carregarReceita();
+        configurarBotoes();
+
+        btn_voltar.setOnClickListener(v -> finish());
     }
 
-    public static class TelaEditarReceita extends AppCompatActivity {
+    // =========================
+    // 🔹 CATEGORIAS (DROPDOWN)
+    // =========================
+    private void setupCategoriaDropdown() {
+        String[] categorias = {
+                "Salário",
+                "Freelance",
+                "Investimentos",
+                "Presente",
+                "Outros"
+        };
 
-        private ImageView btnVoltar;
-        private EditText edtValor, edtData, edtDescricao, edtDetalhes;
-        private Button btnAtualizar;
+        edtCategoria.setOnClickListener(v -> edtCategoria.showDropDown());
 
-        private String categoriaSelecionada = "";
-        private LinearLayout[] categoriasViews;
-
-        private int receitaId; // ← ID da receita para atualizar no banco
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_tela_alterar_receita);
-
-            initViews();
-            setupCategoryClicks();
-            setupDatePicker();
-            receberDados();
-
-            btnVoltar.setOnClickListener(v -> finish());
-            btnAtualizar.setOnClickListener(v -> atualizarReceita());
-        }
-
-        private void initViews() {
-            btnVoltar = findViewById(R.id.btn_voltar);
-            edtValor = findViewById(R.id.edt_valor);
-            edtData = findViewById(R.id.edt_data);
-            edtDescricao = findViewById(R.id.edt_descricao);
-            edtDetalhes = findViewById(R.id.edt_detalhes);
-            btnAtualizar = findViewById(R.id.btn_salvar);
-
-            categoriasViews = new LinearLayout[]{
-                    findViewById(R.id.cat_salario),
-                    findViewById(R.id.cat_freelance)
-
-            };
-        }
-
-        private void receberDados() {
-            receitaId = getIntent().getIntExtra("id", -1);
-
-            edtValor.setText(getIntent().getStringExtra("valor"));
-            edtData.setText(getIntent().getStringExtra("data"));
-            edtDescricao.setText(getIntent().getStringExtra("descricao"));
-            edtDetalhes.setText(getIntent().getStringExtra("detalhes"));
-
-            categoriaSelecionada = getIntent().getStringExtra("categoria");
-        }
-
-        private void atualizarReceita() {
-            String valor = edtValor.getText().toString();
-            String data = edtData.getText().toString();
-            String nome = edtDescricao.getText().toString();
-
-            if (valor.isEmpty()) {
-                Toast.makeText(this, "Digite o valor", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (categoriaSelecionada.isEmpty()) {
-                Toast.makeText(this, "Selecione a categoria", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (data.isEmpty()) {
-                Toast.makeText(this, "Selecione a data", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Toast.makeText(this, "Receita atualizada!", Toast.LENGTH_LONG).show();
-
-
-            finish();
-        }
-
-        private void setupDatePicker() {
-            edtData.setOnClickListener(v -> {
-                final Calendar c = Calendar.getInstance();
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
                         this,
-                        (view, y, m, d) -> edtData.setText(d + "/" + (m+1) + "/" + y),
-                        year, month, day
+                        android.R.layout.simple_dropdown_item_1line,
+                        categorias
                 );
-                dialog.show();
-            });
-        }
 
-        private void setupCategoryClicks() {
-            configurarClique(findViewById(R.id.cat_salario), "Salário");
-            configurarClique(findViewById(R.id.cat_freelance), "Freelance");
-        }
+        edtCategoria.setAdapter(adapter);
+    }
 
-        private void configurarClique(LinearLayout layout, String nome) {
-            layout.setOnClickListener(v -> {
-                for (LinearLayout item : categoriasViews) {
-                    item.setBackgroundResource(R.drawable.bg_category_item);
+    // =========================
+    // 🔹 DATE PICKER
+    // =========================
+    private void setupDatePicker() {
+        edtData.setOnClickListener(v -> {
+
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    this,
+                    (view, year1, monthOfYear, dayOfMonth) -> {
+
+                        String dia = dayOfMonth < 10 ? "0" + dayOfMonth : String.valueOf(dayOfMonth);
+                        String mes = (monthOfYear + 1) < 10
+                                ? "0" + (monthOfYear + 1)
+                                : String.valueOf(monthOfYear + 1);
+
+                        edtData.setText(year1 + "-" + mes + "-" + dia);
+                    },
+                    year, month, day
+            );
+
+            datePickerDialog.show();
+        });
+    }
+
+    // =========================
+    // 🔹 CARREGAR RECEITA
+    // =========================
+    private void carregarReceita() {
+        receita = (ReceitaModel) getIntent().getSerializableExtra("RECEITA");
+
+        if (receita == null) return;
+
+        edtNome.setText(receita.getNome_receita());
+        edtCategoria.setText(receita.getCategoria(), false);
+        edtData.setText(receita.getData());
+        edtDescricao.setText(receita.getDescricao());
+        txtValorReceita.setText("R$ " + receita.getValor());
+    }
+
+    // =========================
+    // 🔹 BOTÕES
+    // =========================
+    private void configurarBotoes() {
+
+        btnAlterarReceita.setOnClickListener(v -> {
+            if (receita == null) return;
+
+            String valorTexto = txtValorReceita.getText().toString()
+                    .replace("R$", "")
+                    .replace(",", ".")
+                    .trim();
+
+            if (valorTexto.isEmpty()) {
+                txtValorReceita.setError("Informe o valor");
+                return;
+            }
+
+            double valor;
+            try {
+                valor = Double.parseDouble(valorTexto);
+            } catch (NumberFormatException e) {
+                txtValorReceita.setError("Valor inválido");
+                return;
+            }
+
+            dadosViewModel.alterarReceita(
+                    receita.getId(),
+                    valor,
+                    edtCategoria.getText().toString(),
+                    edtData.getText().toString(),
+                    edtNome.getText().toString(),
+                    edtDescricao.getText().toString(),
+                    token
+            ).observe(this, sucesso -> {
+                if (sucesso) {
+                    finish();
                 }
-                layout.setBackgroundResource(R.drawable.bg_category_selected);
-                categoriaSelecionada = nome;
             });
-        }
+        });
+
+        btnApagarReceita.setOnClickListener(v -> {
+            if (receita == null) return;
+
+            dadosViewModel.deletarReceita(
+                    receita.getId(),
+                    token
+            ).observe(this, sucesso -> {
+                if (sucesso) {
+                    finish();
+                }
+            });
+        });
+    }
+
+    // =========================
+    // 🔹 FINDS
+    // =========================
+    private void inicializarViews() {
+        edtNome = findViewById(R.id.edtAlterarNome);
+        edtCategoria = findViewById(R.id.edtAlterarCategoria);
+        edtData = findViewById(R.id.edtAlterarData);
+        edtDescricao = findViewById(R.id.edtAlterarDescricao);
+        txtValorReceita = findViewById(R.id.txtValorDespesa);
+
+        btnAlterarReceita = findViewById(R.id.btnAlterarDespesa);
+        btnApagarReceita = findViewById(R.id.btnApagarDespesa);
+        btn_voltar = findViewById(R.id.btn_voltar);
     }
 }
