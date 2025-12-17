@@ -62,7 +62,8 @@
             android:textStyle="bold"
             android:background="@null"
             android:layout_marginTop="8dp"
-            android:textColorHint="@color/verde_principal"
+            android:textColor="#00C853"
+            android:textColorHint="#00C853"
             app:layout_constraintTop_toBottomOf="@id/txtValor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
