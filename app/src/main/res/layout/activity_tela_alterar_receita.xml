@@ -30,7 +30,7 @@
             android:id="@+id/txtDetalhesDespesa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detalhes da Receita"
+            android:text="Alterar Receita"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -194,7 +194,7 @@
             android:id="@+id/btnAlterarDespesa"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:text="Editar Receita"
+            android:text="Salvar Alterações"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:backgroundTint="@color/black"
@@ -204,6 +204,20 @@
             app:layout_constraintTop_toBottomOf="@id/layoutDescricao"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iconEditar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="73dp"
+            android:layout_marginTop="3dp"
+            android:elevation="8dp"
+            android:src="@drawable/stylus_24dp"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/btnAlterarDespesa"
+            app:layout_constraintStart_toStartOf="@id/btnAlterarDespesa"
+            app:layout_constraintTop_toTopOf="@id/btnAlterarDespesa"
+            app:layout_constraintVertical_bias="0.468" />
 
         <Button
             android:id="@+id/btnApagarDespesa"
@@ -219,6 +233,19 @@
             app:layout_constraintTop_toBottomOf="@id/btnAlterarDespesa"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iconLixo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="87dp"
+            android:layout_marginTop="3dp"
+            android:elevation="10dp"
+            android:src="@drawable/delete_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/btnApagarDespesa"
+            app:layout_constraintStart_toStartOf="@id/btnApagarDespesa"
+            app:layout_constraintTop_toTopOf="@id/btnApagarDespesa"
+            app:layout_constraintVertical_bias="0.468" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
