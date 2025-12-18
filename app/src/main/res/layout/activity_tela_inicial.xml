@@ -62,7 +62,7 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:backgroundTint="#004D40"
+                app:backgroundTint="@color/verde_principal"
                 app:cornerRadius="12dp"
 
                 app:icon="@drawable/ic_logout"
@@ -219,7 +219,7 @@
                 android:id="@+id/lbl_gastos_categoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="524dp"
+                android:layout_marginTop="600dp"
                 android:text="@string/gastos_por_categoria"
                 android:textColor="@color/verde_principal"
                 android:textSize="16sp"
